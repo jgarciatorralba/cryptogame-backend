@@ -1,54 +1,48 @@
-import pkg from 'sequelize';
-const {DataTypes, Model} = pkg;
-import {sequelize} from '../database/connection.js';
+import sequelize from 'sequelize';
+import DataTypes from 'sequelize';
+import connection from '../database/connection.js';
 
-class User extends Model {};
+class User extends sequelize.Model { };
 
-User.init(
-  {
-    user_id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
-      allowNull: false
-    },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    json_web_token: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    avatar: {
-      type: DataTypes.STRING,
-    },
-    role: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    balance: {
-      type: DataTypes.FLOAT,
-      allowNull: false
-    }
+User.init({
+  user_id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+    allowNull: false
   },
-  {
-    sequelize,
-    modelName: 'user'
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  json_web_token: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  avatar: {
+    type: DataTypes.STRING,
+  },
+  role: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  },
+  balance: {
+    type: DataTypes.FLOAT,
+    allowNull: false
   }
-)
-
-User.sync().then(() => {
-  console.log('table created');
+}, {
+  sequelize: connection,
+  modelName: 'user'
 });
 
+User.sync();
 
-export {User}
+export default User;
