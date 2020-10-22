@@ -6,16 +6,15 @@ const router = express.Router();
 
 router.post('/register', async (req, res) => {
   try {
-    const newEmail = await User.findAll( {where: {email: req.body.email}})
-    if (newEmail.length > 0) {
-      res.json({success: false, error: "Email already taken"});
-    } else {
       const hashedPassword = await bcrypt.hash(req.body.password, 8);
-      await User.create({email: newEmail, password: hashedPassword, name: req.body.name});
-      res.json({success: true, message: "Congratulation, you have successfully registered!"});
-    }    
+      await User.create({email: req.body.email, password: hashedPassword, name: req.body.name});
+      res.json({data: "Congratulation, you have successfully registered!", error: null});
   } catch(error) {
-    res.json({error: error});
+    if(error.name == "SequelizeUniqueConstraintError") {
+      res.status(400).json({data: null, error: "Email already taken"});
+    } else {
+      res.status(404).json({data: null, error: "Unknown error"});
+    }
   } 
 })
 
