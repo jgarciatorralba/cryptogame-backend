@@ -1,7 +1,7 @@
 import express from 'express';
 import jwt from 'jsonwebtoken';
 
-import config from './src/config/app-config.js';
+import config from './config/app-config.js';
 
 const app = express();
 
@@ -12,8 +12,11 @@ const posts = [
   { username: 'Yulia', title: 'Post 2' }
 ];
 
-app.get('/posts', authToken, (req, res) => {
-  res.json(posts);
+app.get('/posts', authMiddleware, (req, res, next) => {
+  res.json({ user: req.user, posts });
+  next();
+}, (req, res) => {
+  console.log('final function');
 });
 
 app.post('/login', (req, res) => {
@@ -24,7 +27,7 @@ app.post('/login', (req, res) => {
   res.json({ accessToken });
 });
 
-function authToken(req, res, next) {
+function authMiddleware(req, res, next) {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
   if (token == null) return res.sendStatus(401);
@@ -32,7 +35,6 @@ function authToken(req, res, next) {
   jwt.verify(token, config.app.accessTokenSecret, (err, user) => {
     if (err) return res.sendStatus(403);
     req.user = user;
-    console.log(user);
     next();
   });
 }
