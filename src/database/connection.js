@@ -1,6 +1,7 @@
 import Sequelize from 'sequelize';
 import dotenv from 'dotenv';
 
+
 dotenv.config({path: './.env'})
 
 const sequelize = new Sequelize(
@@ -12,7 +13,7 @@ const sequelize = new Sequelize(
     dialect: 'mysql'
   });
 
-const connect = async ()  => {
+const connectDatabase = async ()  => {
   try {
     await sequelize.authenticate();
     console.log('Connection has been established successfully.');
@@ -21,4 +22,4 @@ const connect = async ()  => {
   }
 } 
 
-export {connect};
+export {connectDatabase, sequelize};
