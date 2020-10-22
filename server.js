@@ -1,4 +1,6 @@
 import express from 'express';
+import {sequelize} from './src/database/connection.js';
+
 
 const app = express();
 
