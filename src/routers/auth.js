@@ -1,17 +1,22 @@
 import express from 'express';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+
+import User from '../models/user.js';
+import config from '../config/app-config.js';
 
 const router = express.Router();
 
-router.post('/login', (req, res) => {
-  // TODO: Auth user
+router.post('/login', async (req, res) => {
   const credentials = req.body;
 
-  const user = User.getByEmail(credentials.email);
+  const user = await User.findOne({ where: { email: credentials.email } });
+  if (user == null) res.statusCode(400);
 
-  bcrypt.compare(credentials.password, user.password);
+  const match = await bcrypt.compare(credentials.password, user.password);
+  if (!match) res.statusCode(400);
 
-  // End TODO: Auth user
-  const accessToken = jwt.sign({ id: user.id }, config.app.accessTokenSecret);
+  const accessToken = jwt.sign({ id: user.user_id }, config.app.accessTokenSecret);
   res.json({ accessToken });
 });
 

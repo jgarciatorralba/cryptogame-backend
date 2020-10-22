@@ -23,10 +23,6 @@ User.init({
     type: DataTypes.STRING,
     allowNull: false
   },
-  json_web_token: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
   avatar: {
     type: DataTypes.STRING,
   },
