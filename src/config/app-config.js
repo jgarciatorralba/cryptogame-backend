@@ -4,11 +4,12 @@ import fs from 'fs';
 const result = dotenv.config();
 
 if (result.error) {
+  console.log("⚠️  Couldn't find .env file, creating one from .env.example");
   fs.copyFileSync('.env.example', '.env');
   dotenv.config();
 }
 
-const config = {
+export default {
   app: {
     port: parseInt(process.env.APP_PORT),
     saltRounds: process.env.SALT_ROUNDS,
@@ -23,5 +24,3 @@ const config = {
     database: process.env.DB_NAME
   }
 };
-
-export default config;
