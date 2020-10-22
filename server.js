@@ -1,8 +1,10 @@
 import express from 'express';
-import {sequelize} from './src/database/connection.js';
+import {connect} from './src/database/connection.js';
 
 
 const app = express();
+
+connect();
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
