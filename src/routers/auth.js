@@ -1,7 +1,7 @@
 import express from 'express';
 import User from '../models/user.js';
 import Wallet from '../models/wallet.js';
-//import '../models/relations.js'
+import Transaction from '../models/transaction.js';
 import bcrypt from 'bcrypt';
 const router = express.Router();
 
