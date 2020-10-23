@@ -1,6 +1,7 @@
 import sequelize from 'sequelize';
 import DataTypes from 'sequelize';
 import connection from '../database/connection.js';
+import Wallet from './wallet.js';
 
 class Stock extends sequelize.Model { };
 

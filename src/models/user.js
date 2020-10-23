@@ -40,6 +40,8 @@ User.init({
   modelName: 'user'
 });
 
+
+
 User.sync();
 
 export default User;
