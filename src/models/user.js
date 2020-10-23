@@ -13,7 +13,8 @@ User.init({
   },
   email: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
+    unique: true
   },
   password: {
     type: DataTypes.STRING,
@@ -28,11 +29,11 @@ User.init({
   },
   role: {
     type: DataTypes.INTEGER,
-    allowNull: false
+    defaultValue: 0
   },
   balance: {
     type: DataTypes.FLOAT,
-    allowNull: false
+    defaultValue: 20000
   }
 }, {
   sequelize: connection,
