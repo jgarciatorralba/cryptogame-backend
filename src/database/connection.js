@@ -5,5 +5,9 @@ export default new Sequelize(
   config.db.name,
   config.db.user,
   config.db.pass,
-  { host: config.db.host, dialect: 'mysql' }
+  {
+    host: config.db.host,
+    dialect: 'mysql',
+    logging: false
+  }
 );

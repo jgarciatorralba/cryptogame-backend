@@ -2,7 +2,20 @@ POST http://localhost:3000/register
 Content-Type: application/json
 
 {
-  "email" : "yulia@assembler.es",
-  "name" : "test",
-  "password" : "test"
+  "email" : "chris@assembler.es",
+  "name" : "Chris",
+  "password" : "123456"
 }
+
+###
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+  "email" : "chris@assembler.es",
+  "password" : "123456"
+}
+
+###
+GET http://localhost:3000/api/profile
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiaWF0IjoxNjAzNDY0NTAzfQ.TtCQIKbNWZwGa3VTx-rZRt-ABpt-b5EjXrTxakZJTU4
