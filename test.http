@@ -12,7 +12,7 @@ POST http://localhost:3000/login
 Content-Type: application/json
 
 {
-  "email" : "chris@assembler.es",
+  "email" : "chris@assembler.com",
   "password" : "123456"
 }
 
@@ -22,4 +22,9 @@ GET http://localhost:3000/api/transactions
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiaWF0IjoxNjAzNDY0NTAzfQ.TtCQIKbNWZwGa3VTx-rZRt-ABpt-b5EjXrTxakZJTU4
 
 ###
-GET http:://localhost:3000/api/coins
+GET http://localhost:3000/api/coins
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiaWF0IjoxNjAzNDY0NTAzfQ.TtCQIKbNWZwGa3VTx-rZRt-ABpt-b5EjXrTxakZJTU4
+
+###
+GET http://localhost:3000/api/wallet
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjAzNTcxODUwfQ.68dnXn4yE_UcdGEXWabte74IeCC6VshyYvDfT6OQLZQ
