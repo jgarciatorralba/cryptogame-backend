@@ -1,28 +1,37 @@
+import connection from './connection.js';
 import User from '../models/user.js';
 import Stock from '../models/stock.js';
 import Transaction from '../models/transaction.js';
 import Wallet from '../models/wallet.js';
 
-await User.sync();
-await Stock.sync();
-await Transaction.sync();
-await Wallet.sync();
+await connection.drop();
+await connection.sync();
 
+// insert users
+const users = [
+  { email: 'admin', password: 'admin', name: 'admin', role: 1 }
+].forEach(user => User.create(user));
+
+// insert coins
 const coins = [
-  { symbol: 'BTCUSDT', name: 'Bitcoin' },
-  { symbol: 'ETHUSDT', name: 'Ethereum' },
-  { symbol: 'LTCUSDT', name: 'Litecoin' },
-  { symbol: 'BCHUSDT', name: 'Bitcoin Cash' },
-  { symbol: 'XRPUSDT', name: 'Ripple' },
-  { symbol: 'EOSUSDT', name: 'EOS' },
-  { symbol: 'ADAUSDT', name: 'Cardano' },
-  { symbol: 'TRXUSDT', name: 'Tron' },
-  { symbol: 'XMRUSDT', name: 'Monero' },
-  { symbol: 'BNBUSDT', name: 'Binance Coin' },
-  { symbol: 'NEOUSDT', name: 'NEO' },
-  { symbol: 'DOGEUSDT', name: 'Dogecoin' }
-];
+  { symbol: 'BTC', pair: 'BTCUSDT', name: 'Bitcoin' },
+  { symbol: 'ETH', pair: 'ETHUSDT', name: 'Ethereum' },
+  { symbol: 'LTC', pair: 'LTCUSDT', name: 'Litecoin' },
+  { symbol: 'BCH', pair: 'BCHUSDT', name: 'Bitcoin Cash' },
+  { symbol: 'XRP', pair: 'XRPUSDT', name: 'Ripple' },
+  { symbol: 'EOS', pair: 'EOSUSDT', name: 'EOS' },
+  { symbol: 'ADA', pair: 'ADAUSDT', name: 'Cardano' },
+  { symbol: 'TRX', pair: 'TRXUSDT', name: 'Tron' },
+  { symbol: 'XMR', pair: 'XMRUSDT', name: 'Monero' },
+  { symbol: 'BNB', pair: 'BNBUSDT', name: 'Binance Coin' },
+  { symbol: 'NEO', pair: 'NEOUSDT', name: 'NEO' },
+  { symbol: 'DOGE', pair: 'DOGEUSDT', name: 'Dogecoin' }
+].forEach(coin => Stock.create(coin));
 
-for (const coin of coins) {
-  Stock.create({ symbol: coin.symbol, name: coin.name });
-}
+// inser wallets
+const wallets = [
+  { user_id: 1, stock_id: 1, amount: 0.123 },
+  { user_id: 1, stock_id: 2, amount: 5.436 },
+  { user_id: 1, stock_id: 3, amount: 10.91 },
+  { user_id: 1, stock_id: 12, amount: 420 }
+].forEach(wallet => Wallet.create(wallet));

@@ -16,6 +16,11 @@ Stock.init({
     allowNull: false,
     unique: true
   },
+  pair: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true
+  },
   name: {
     type: DataTypes.STRING,
     allowNull: false

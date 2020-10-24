@@ -29,11 +29,13 @@ User.init({
   },
   role: {
     type: DataTypes.INTEGER,
+    allowNull: false,
     defaultValue: 0
   },
   balance: {
     type: DataTypes.FLOAT,
-    defaultValue: 20000
+    allowNull: false,
+    defaultValue: 0
   }
 }, {
   sequelize: connection,
