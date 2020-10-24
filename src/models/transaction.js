@@ -30,7 +30,7 @@ Transaction.init({
     }
   },
   type: {
-    type: DataTypes.BOOLEAN,
+    type: DataTypes.ENUM('BUY', 'SELL'),
     allowNull: false
   },
   quantity: {
