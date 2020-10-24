@@ -30,6 +30,16 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxN
 Content-Type: application/json
 
 {
-  "symbol" : "BTC",
-  "quantity": "12"
+  "symbol" : "TRX",
+  "quantity": "10000"
+}
+
+###
+POST http://localhost:3000/api/sell
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjAzNTc2OTQwfQ.A_cAT3rEgcVyuVmrRpXcKqnyLoe02wjj4u8aNUYHU10
+Content-Type: application/json
+
+{
+  "symbol" : "ETH",
+  "quantity": "12.436"
 }

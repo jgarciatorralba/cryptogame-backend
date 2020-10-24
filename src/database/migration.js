@@ -9,7 +9,7 @@ await connection.sync();
 
 // insert users
 const users = [
-  { email: 'admin', password: '$2b$12$m6eJeEa65Xnd3sjzxexj0.hQMvGfwTOiVbIJgSneKIITUYoEO8qQu', name: 'admin', role: 1 }
+  { email: 'admin', password: '$2b$12$m6eJeEa65Xnd3sjzxexj0.hQMvGfwTOiVbIJgSneKIITUYoEO8qQu', name: 'admin', role: 1, balance: 10000 }
 ].forEach(user => User.create(user));
 
 // insert coins
