@@ -97,13 +97,14 @@ router.get('/wallet', async (req, res) => {
     let valueOfAssets = 0;
     const walletPositions = await Wallet.findAll({where: {user_id: id}, include: [{model: Stock, as: 'stock'}]})
 
-    for (let position of walletPositions) {
+    for (const position of walletPositions) {
       const coin = await Stock.findOne({where: {stock_id: position.stock_id}})
       wallet.push({coin: position.stock.symbol, quantity: position.quantity, price: coin.dataValues.price, value: position.quantity * coin.dataValues.price})
       valueOfAssets += position.quantity * coin.dataValues.price
     }
 
     const balance = await User.findOne({where: {user_id: id}, attributes: ['balance']});
+
     wallet.push({estimated_value: valueOfAssets});
     wallet.push({balance: balance.dataValues.balance});
     wallet.push({total: balance.dataValues.balance + valueOfAssets});
@@ -111,7 +112,7 @@ router.get('/wallet', async (req, res) => {
     res.json(wallet);
 
   } catch(error) {
-    console.log(error);
+    res.json({ data: null, error: 'Wallet not found!' });;
   } 
 });
 
