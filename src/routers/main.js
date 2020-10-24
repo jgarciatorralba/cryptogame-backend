@@ -2,6 +2,7 @@ import express from 'express';
 import authMiddleware from '../middlewares/auth.js';
 import Stock from '../models/stock.js';
 import User from '../models/user.js';
+import Wallet from '../models/wallet.js';
 import Transaction from '../models/transaction.js';
 
 const router = express.Router();
@@ -14,16 +15,79 @@ router.get('/profile', (req, res) => {
 
 router.get('/transactions', async (req, res) => {
   try {
-    const transactions = await Transaction.findAll({include: [{model: User, as: 'user'}, {model: Stock, as: 'stock'}]})
-    let result = []
+    const transactions = await Transaction.findAll({ include: [{ model: User, as: 'user' }, { model: Stock, as: 'stock' }] });
+    let result = [];
 
     for (let transaction of transactions) {
-      result.push({id: transaction.transaction_id, user: transaction.user.name, coin: transaction.stock.name, quantity: transaction.cuantity, value: transaction.value, date: transaction.createdAt})
+      result.push({
+        id: transaction.transaction_id,
+        user: transaction.user.name,
+        coin: transaction.stock.name,
+        quantity: transaction.quantity,
+        value: transaction.value,
+        date: transaction.createdAt
+      });
     }
+
     res.json(result);
-  } catch(error) {
+  } catch (error) {
     res.status(404).json({ data: null, error: 'Unknown error' });
-  } 
+  }
+});
+
+router.post('/buy', async (req, res) => {
+  if (req.body.symbol == null) {
+    return res
+      .status(400)
+      .json({ data: null, error: 'Bad Request: Missing symbol attribute' });
+  }
+
+  if (req.body.quantity == null) {
+    return res
+      .status(400)
+      .json({ data: null, error: 'Bad Request: Missing quantity attribute' });
+  }
+
+  const quantity = parseFloat(req.body.quantity);
+
+  if (isNaN(quantity)) {
+    return res
+      .status(400)
+      .json({ data: null, error: 'Bad Request: Invalid quantity value' });
+  }
+
+  const stock = await Stock.findOne({ where: { symbol: req.body.symbol } });
+
+  if (stock == null) {
+    return res
+      .status(400)
+      .json({ data: null, error: 'Bad Request: Invalid coin symbol ' + req.body.symbol });
+  }
+
+  const user = await User.findByPk(req.user.id);
+  const value = quantity * stock.price;
+
+  user.balance -= value;
+  if (user.balance < 0) {
+    return res
+      .status(400)
+      .json({ data: null, error: 'Bad Request: Not enought funds' });
+  }
+  await user.save();
+
+  const wallet = await Wallet.findOne({ where: { user_id: user.user_id, stock_id: stock.stock_id } });
+  wallet.quantity += quantity;
+  await wallet.save();
+
+  await Transaction.create({
+    user_id: user.user_id,
+    stock_id: stock.stock_id,
+    type: 'BUY',
+    quantity: quantity,
+    value: value
+  });
+
+  res.json({ data: 'Success!', error: null });
 });
 
 export default router;

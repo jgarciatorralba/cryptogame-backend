@@ -12,14 +12,20 @@ POST http://localhost:3000/login
 Content-Type: application/json
 
 {
-  "email" : "chris@assembler.es",
-  "password" : "123456"
+  "email" : "admin",
+  "password" : "admin"
 }
-
 
 ###
 GET http://localhost:3000/api/transactions
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiaWF0IjoxNjAzNDY0NTAzfQ.TtCQIKbNWZwGa3VTx-rZRt-ABpt-b5EjXrTxakZJTU4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjAzNTc2OTQwfQ.A_cAT3rEgcVyuVmrRpXcKqnyLoe02wjj4u8aNUYHU10
 
 ###
-GET http:://localhost:3000/api/coins
+POST http://localhost:3000/api/buy
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjAzNTc2OTQwfQ.A_cAT3rEgcVyuVmrRpXcKqnyLoe02wjj4u8aNUYHU10
+Content-Type: application/json
+
+{
+  "symbol" : "BTC",
+  "quantity": "12"
+}
