@@ -71,7 +71,7 @@ router.post('/buy', async (req, res) => {
   if (user.balance < 0) {
     return res
       .status(400)
-      .json({ data: null, error: 'Bad Request: Not enought funds' });
+      .json({ data: null, error: 'Bad Request: Not enough funds' });
   }
   await user.save();
 
@@ -87,6 +87,64 @@ router.post('/buy', async (req, res) => {
     user_id: user.user_id,
     stock_id: stock.stock_id,
     type: 'BUY',
+    quantity: quantity,
+    value: value
+  });
+
+  res.json({ data: 'Success!', error: null });
+});
+
+router.post('/sell', async (req, res) => {
+  if (req.body.symbol == null) {
+    return res
+      .status(400)
+      .json({ data: null, error: 'Bad Request: Missing symbol attribute' });
+  }
+
+  if (req.body.quantity == null) {
+    return res
+      .status(400)
+      .json({ data: null, error: 'Bad Request: Missing quantity attribute' });
+  }
+
+  const quantity = parseFloat(req.body.quantity);
+
+  if (isNaN(quantity)) {
+    return res
+      .status(400)
+      .json({ data: null, error: 'Bad Request: Invalid quantity value' });
+  }
+
+  const stock = await Stock.findOne({ where: { symbol: req.body.symbol } });
+
+  if (stock == null) {
+    return res
+      .status(400)
+      .json({ data: null, error: 'Bad Request: Invalid coin symbol ' + req.body.symbol });
+  }
+
+  const user = await User.findByPk(req.user.id);
+
+  const wallet = await Wallet.findOne({ where: { user_id: user.user_id, stock_id: stock.stock_id } });
+
+  if (wallet == null || wallet.quantity < quantity) {
+    return res
+      .status(400)
+      .json({ data: null, error: 'Bad Request: Net enough funds' });
+  }
+
+  wallet.quantity -= quantity;
+  if (wallet.quantity === 0) await wallet.destroy();
+  else await wallet.save();
+
+  const value = quantity * stock.price;
+  user.balance += value;
+  await user.save();
+
+  await Transaction.create({
+    user_id: user.user_id,
+    stock_id: stock.stock_id,
+    type: 'SELL',
     quantity: quantity,
     value: value
   });
