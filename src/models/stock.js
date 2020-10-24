@@ -11,21 +11,16 @@ Stock.init({
     primaryKey: true,
     allowNull: false
   },
-  api_id: {
-    type: DataTypes.INTEGER,
+  symbol: {
+    type: DataTypes.STRING,
     allowNull: false,
-    unique: true
   },
   name: {
     type: DataTypes.STRING,
     allowNull: false
   },
-  current_value: {
+  value: {
     type: DataTypes.FLOAT,
-    allowNull: false
-  },
-  description: {
-    type: DataTypes.STRING,
     allowNull: false
   }
 }, {
@@ -33,6 +28,9 @@ Stock.init({
   modelName: 'stock'
 });
 
+
+
 Stock.sync();
+
 
 export default Stock;

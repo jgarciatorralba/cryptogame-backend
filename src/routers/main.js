@@ -17,10 +17,10 @@ router.get('/transactions', async (req, res) => {
     const transactions = await Transaction.findAll({include: [{model: User, as: 'user'}, {model: Stock, as: 'stock'}]})
     let result = []
 
-    for(let transaction of transactions) {
+    for (let transaction of transactions) {
       result.push({id: transaction.transaction_id, user: transaction.user.name, coin: transaction.stock.name, quantity: transaction.cuantity, value: transaction.value, date: transaction.createdAt})
     }
-    res.json(result)
+    res.json(result);
   } catch(error) {
     res.status(404).json({ data: null, error: 'Unknown error' });
   } 
