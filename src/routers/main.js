@@ -76,8 +76,12 @@ router.post('/buy', async (req, res) => {
   await user.save();
 
   const wallet = await Wallet.findOne({ where: { user_id: user.user_id, stock_id: stock.stock_id } });
-  wallet.quantity += quantity;
-  await wallet.save();
+  if (wallet == null) {
+    await Wallet.create({ user_id: user.user_id, stock_id: stock.stock_id, quantity: quantity });
+  } else {
+    wallet.quantity += quantity;
+    await wallet.save();
+  }
 
   await Transaction.create({
     user_id: user.user_id,

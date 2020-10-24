@@ -31,6 +31,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxN
 Content-Type: application/json
 
 {
-  "symbol" : "ETH",
-  "quantity": "6"
+  "symbol" : "TRX",
+  "quantity": "10000"
 }
