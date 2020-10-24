@@ -38,8 +38,8 @@ const wallets = [
 
 // insert transactions
 const transactions = [
-  { user_id: 1, stock_id: 1, quantity: 0.123, value: 13114.3 },
-  { user_id: 1, stock_id: 2, quantity: 5.436, value: 2.6538 },
-  { user_id: 1, stock_id: 3, quantity: 10.91, value: 412.1 },
-  { user_id: 1, stock_id: 12, quantity: 420, value: 0.0026366 }
+  { user_id: 1, stock_id: 1, type: 'BUY', quantity: 0.123, value: 13114.3 },
+  { user_id: 1, stock_id: 2, type: 'BUY', quantity: 5.436, value: 2.6538 },
+  { user_id: 1, stock_id: 3, type: 'SELL', quantity: 10.91, value: 412.1 },
+  { user_id: 1, stock_id: 12, type: 'BUY', quantity: 420, value: 0.0026366 }
 ].forEach(transaction => Transaction.create(transaction));
