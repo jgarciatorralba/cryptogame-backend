@@ -3,7 +3,6 @@ import Stock from '../models/stock.js';
 import Transaction from '../models/transaction.js';
 import Wallet from '../models/wallet.js';
 
-
 await User.sync();
 await Stock.sync();
 await Transaction.sync();
