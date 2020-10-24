@@ -3,11 +3,11 @@ import Stock from '../models/stock.js';
 
 export default {
   watch: async function () {
-    const symbols = (await Stock.findAll()).map(s => s.symbol);
+    const pairs = (await Stock.findAll()).map(s => s.pair);
     const ws = new WebSocket('wss://stream.binance.com:9443/ws/!ticker@arr');
     ws.on('message', data => {
       JSON.parse(data).map(coin => {
-        if (symbols.includes(coin.s)) {
+        if (pairs.includes(coin.s)) {
           Stock.update({
             price: coin.c,
             change: coin.P,
@@ -15,7 +15,7 @@ export default {
             low: coin.l,
             volume: coin.v,
             trades: coin.n
-          }, { where: { symbol: coin.s } });
+          }, { where: { pair: coin.s } });
         }
       });
     });
