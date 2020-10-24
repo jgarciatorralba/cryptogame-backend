@@ -38,9 +38,7 @@ Wallet.init({
   modelName: 'wallet'
 });
 
-Wallet.belongsTo(User, {foreignKey: 'user_id'});
-Wallet.belongsTo(Stock, {foreignKey: 'stock_id'});
-
-Wallet.sync();
+Wallet.belongsTo(User, { foreignKey: 'user_id' });
+Wallet.belongsTo(Stock, { foreignKey: 'stock_id' });
 
 export default Wallet;

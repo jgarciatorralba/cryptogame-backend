@@ -14,23 +14,45 @@ Stock.init({
   symbol: {
     type: DataTypes.STRING,
     allowNull: false,
+    unique: true
   },
   name: {
     type: DataTypes.STRING,
     allowNull: false
   },
-  value: {
+  price: {
     type: DataTypes.FLOAT,
-    allowNull: false
+    allowNull: false,
+    defaultValue: 0
+  },
+  change: {
+    type: DataTypes.FLOAT,
+    allowNull: false,
+    defaultValue: 0
+  },
+  high: {
+    type: DataTypes.FLOAT,
+    allowNull: false,
+    defaultValue: 0
+  },
+  low: {
+    type: DataTypes.FLOAT,
+    allowNull: false,
+    defaultValue: 0
+  },
+  volume: {
+    type: DataTypes.FLOAT,
+    allowNull: false,
+    defaultValue: 0
+  },
+  trades: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    defaultValue: 0
   }
 }, {
   sequelize: connection,
   modelName: 'stock'
 });
-
-
-
-Stock.sync();
-
 
 export default Stock;
