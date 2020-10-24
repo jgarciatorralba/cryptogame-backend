@@ -29,7 +29,7 @@ Wallet.init({
       key: 'stock_id'
     }
   },
-  amount: {
+  quantity: {
     type: DataTypes.FLOAT,
     allowNull: false
   }

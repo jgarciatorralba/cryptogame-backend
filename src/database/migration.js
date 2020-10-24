@@ -30,8 +30,8 @@ const coins = [
 
 // inser wallets
 const wallets = [
-  { user_id: 1, stock_id: 1, amount: 0.123 },
-  { user_id: 1, stock_id: 2, amount: 5.436 },
-  { user_id: 1, stock_id: 3, amount: 10.91 },
-  { user_id: 1, stock_id: 12, amount: 420 }
+  { user_id: 1, stock_id: 1, quantity: 0.123 },
+  { user_id: 1, stock_id: 2, quantity: 5.436 },
+  { user_id: 1, stock_id: 3, quantity: 10.91 },
+  { user_id: 1, stock_id: 12, quantity: 420 }
 ].forEach(wallet => Wallet.create(wallet));

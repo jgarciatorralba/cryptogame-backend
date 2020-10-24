@@ -33,7 +33,7 @@ Transaction.init({
     type: DataTypes.BOOLEAN,
     allowNull: false
   },
-  cuantity: {
+  quantity: {
     type: DataTypes.FLOAT,
     allowNull: false
   },
