@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.post('/register', async (req, res) => {
   try {
-    const hashedPassword = await bcrypt.hash(req.body.password, 8);
+    const hashedPassword = await bcrypt.hash(req.body.password, config.app.saltRounds);
     await User.create({ email: req.body.email, password: hashedPassword, name: req.body.name });
     res.json({ data: 'Congratulation, you have successfully registered!', error: null });
   } catch (error) {
@@ -25,10 +25,10 @@ router.post('/login', async (req, res) => {
   const credentials = req.body;
 
   const user = await User.findOne({ where: { email: credentials.email } });
-  if (user == null) res.status(400).json({ data: null, error: 'Email doesn\'t exists' });
+  if (user == null) return res.status(400).json({ data: null, error: 'Email doesn\'t exists' });
 
   const match = await bcrypt.compare(credentials.password, user.password);
-  if (!match) res.status(400).json({ data: null, error: 'Incorrect password' });
+  if (!match) return res.status(400).json({ data: null, error: 'Incorrect password' });
 
   const accessToken = jwt.sign({ id: user.user_id }, config.app.accessTokenSecret);
   const role = user.role;

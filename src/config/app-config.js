@@ -12,7 +12,7 @@ if (result.error) {
 export default {
   app: {
     port: parseInt(process.env.APP_PORT),
-    saltRounds: process.env.SALT_ROUNDS,
+    saltRounds: parseInt(process.env.SALT_ROUNDS),
     accessTokenSecret: process.env.ACCESS_TOKEN_SECRET,
     refreshTokenSecret: process.env.REFRESH_TOKEN_SECRET
   },
