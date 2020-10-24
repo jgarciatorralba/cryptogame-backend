@@ -11,3 +11,4 @@ export default new Sequelize(
     logging: false
   }
 );
+
