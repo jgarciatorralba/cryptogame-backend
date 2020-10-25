@@ -177,4 +177,13 @@ router.get('/wallet', async (req, res) => {
   });
 });
 
+router.get('/ranking', async (req, res) => {
+
+  const ranking = await User.findAll({ order: [['balance', 'DESC']] });
+  res.json({
+    data: ranking,
+    error: null
+  });
+});
+
 export default router;
