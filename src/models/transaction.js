@@ -50,3 +50,4 @@ Transaction.belongsTo(User, { foreignKey: 'user_id' });
 Transaction.belongsTo(Stock, { foreignKey: 'stock_id' });
 
 export default Transaction;
+

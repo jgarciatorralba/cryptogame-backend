@@ -165,14 +165,17 @@ router.get('/wallet', async (req, res) => {
       valueOfAssets += position.quantity * coin.dataValues.price;
     }
 
-    const balance = await User.findOne({ where: { user_id: id }, attributes: ['balance'] });
-    wallet.push({ balance: balance.dataValues.balance + valueOfAssets });
+    const balance = await User.findOne({where: {user_id: id}, attributes: ['balance']});
+
+    wallet.push({estimated_value: valueOfAssets});
+    wallet.push({balance: balance.dataValues.balance});
+    wallet.push({total: balance.dataValues.balance + valueOfAssets});
 
     res.json(wallet);
 
-  } catch (error) {
-    console.log(error);
-  }
+  } catch(error) {
+    res.json({ data: null, error: 'Wallet not found!' });;
+  } 
 });
 
 export default router;
