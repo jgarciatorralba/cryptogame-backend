@@ -153,23 +153,25 @@ router.post('/sell', async (req, res) => {
 });
 
 router.get('/wallet', async (req, res) => {
-  const id = req.user.id;
-  let coins = [];
-  let totalCoinsValue = 0;
-  const walletPositions = await Wallet.findAll({ where: { user_id: id }, include: [{ model: Stock, as: 'stock' }] });
+  const user_id = req.user.id;
+  const coins = [];
+  const wallet = await Wallet.findAll({ where: { user_id }, include: [{ model: Stock, as: 'stock' }] });
 
-  for (const position of walletPositions) {
-    const coin = await Stock.findOne({ where: { stock_id: position.stock_id } });
-    coins.push({ coin: position.stock.symbol, quantity: position.quantity, price: coin.dataValues.price, value: position.quantity * coin.dataValues.price });
-    totalCoinsValue += position.quantity * coin.dataValues.price;
+  for (const position of wallet) {
+    const symbol = position.stock.symbol;
+    const quantity = position.quantity;
+    const price = position.stock.price;
+    const value = quantity * price;
+    coins.push({ symbol, quantity, price, value });
   }
 
-  const balance = await User.findOne({ where: { user_id: id }, attributes: ['balance'] });
+  const balance = await User.findOne({ where: { user_id }, attributes: ['balance'] });
+  const totalCoinsValue = coins.reduce((total, coin) => total + coin.value, 0);
 
   res.json({
     data: {
       coins: coins,
-      estimated_value: totalCoinsValue,
+      value: totalCoinsValue,
       balance: balance.dataValues.balance,
       total: balance.dataValues.balance + totalCoinsValue
     },
