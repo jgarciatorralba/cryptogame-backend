@@ -17,13 +17,13 @@ router.get('/coin/:coinId', async (req, res) => {
   res.json({ data: {symbol: coin.symbol, pair: coin.pair, name: coin.name}, error: null });
 });
 
-router.get('/users/:page/:limit', async (req, res) => {
+router.get('/users/:page&:limit', async (req, res) => {
   const page   = parseInt(req.params.page);
   const limit  = parseInt(req.params.limit);
   
   const offset = (page -1) * limit;
 
-  const users = await User.findAndCountAll({limit: limit, offset: offset})
+  const users = await User.findAndCountAll({attributes: ['user_id', 'email', 'name', 'avatar', 'role', 'balance'], limit: limit, offset: offset})
 
   res.json(
     { data: users.rows, 
