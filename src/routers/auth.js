@@ -71,8 +71,25 @@ router.post('/login', async (req, res) => {
   if (!match) return res.status(400).json({ data: null, error: 'Incorrect password' });
 
   const accessToken = jwt.sign({ id: user.user_id, role: user.role }, config.app.accessTokenSecret);
-  const role = user.role;
-  res.json({ data: { accessToken, role }, error: null });
+
+  const data = {
+    accessToken: accessToken,
+    user: {
+      email: user.email,
+      name: user.name,
+      avatar: user.avatar,
+      role: user.role,
+      walletBalance: 0,
+      walletEstimated: 0,
+      walletTotal: 0,
+      walletChange: 0,
+      mostBought: 'Bitcoin',
+      mostBoughtSymbol: 'BTC',
+      ranking: 1
+    }
+  };
+
+  res.json({ data: data, error: null });
 });
 
 router.get('/api/coins', async (req, res) => {
