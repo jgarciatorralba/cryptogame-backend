@@ -8,10 +8,32 @@ import config from '../config/app-config.js';
 const router = express.Router();
 
 router.post('/register', async (req, res) => {
+  if (req.body.email == null) {
+    return res
+      .status(400)
+      .json({ data: null, error: 'Bad Request: Missing email attribute' });
+  }
+
+  if (req.body.password == null) {
+    return res
+      .status(400)
+      .json({ data: null, error: 'Bad Request: Missing password attribute' });
+  }
+
+  if (req.body.name == null) {
+    return res
+      .status(400)
+      .json({ data: null, error: 'Bad Request: Missing name attribute' });
+  }
+
+  const user = {
+    email: req.body.email,
+    password: await bcrypt.hash(req.body.password, config.app.saltRounds),
+    name: req.body.name
+  };
+
   try {
-    const hashedPassword = await bcrypt.hash(req.body.password, config.app.saltRounds);
-    await User.create({ email: req.body.email, password: hashedPassword, name: req.body.name });
-    res.json({ data: 'Congratulation, you have successfully registered!', error: null });
+    await User.create(user);
   } catch (error) {
     if (error.name == 'SequelizeUniqueConstraintError') {
       res.status(400).json({ data: null, error: 'Email already taken' });
@@ -19,10 +41,24 @@ router.post('/register', async (req, res) => {
       res.status(500).json({ data: null, error: 'Internal Server Error' });
     }
   }
+
+  res.json({ data: 'Congratulation, you have successfully registered!', error: null });
 });
 
 router.post('/login', async (req, res) => {
   const credentials = req.body;
+
+  if (credentials.email == null) {
+    return res
+      .status(400)
+      .json({ data: null, error: 'Bad Request: Missing email attribute' });
+  }
+
+  if (credentials.password == null) {
+    return res
+      .status(400)
+      .json({ data: null, error: 'Bad Request: Missing password attribute' });
+  }
 
   const user = await User.findOne({ where: { email: credentials.email } });
   if (user == null) return res.status(400).json({ data: null, error: 'Email doesn\'t exists' });
