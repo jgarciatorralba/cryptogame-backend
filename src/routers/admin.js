@@ -13,7 +13,10 @@ router.use(adminMiddleware);
 
 router.get('/coin/:coinId', async (req, res) => {
   const coinId = req.params.coinId;
-  res.json({ data: coinId, error: null });
+  const coin = await Stock.findOne({ where: { stock_id: coinId } })
+  res.json({ data: {symbol: coin.symbol, pair: coin.pair, name: coin.name}, error: null });
 });
+
+
 
 export default router;
