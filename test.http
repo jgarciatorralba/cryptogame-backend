@@ -61,6 +61,9 @@ GET http://localhost:3000/admin/coin/1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6MSwiaWF0IjoxNjAzNzE3Mzk4fQ.4kl5UmIaEwUpq5F87BNF90iduwPdInDSw_6OxvzkKiI
 Content-Type: application/json
 
-{
-  "coinId" : 1
-}
+
+###
+GET http://localhost:3000/admin/users/2/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6MSwiaWF0IjoxNjAzNzE3Mzk4fQ.4kl5UmIaEwUpq5F87BNF90iduwPdInDSw_6OxvzkKiI
+Content-Type: application/json
+
