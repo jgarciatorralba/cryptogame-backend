@@ -9,8 +9,36 @@ const router = express.Router();
 
 router.use(authMiddleware);
 
-router.get('/profile', (req, res) => {
-  res.send('Protected profile page');
+router.get('/wallet', async (req, res) => {
+  const user_id = req.user.id;
+  const coins = [];
+  const wallet = await Wallet.findAll({ where: { user_id }, include: [{ model: Stock, as: 'stock' }] });
+
+  for (const position of wallet) {
+    const symbol = position.stock.symbol;
+    const quantity = position.quantity;
+    const price = position.stock.price;
+    const value = quantity * price;
+    coins.push({ symbol, quantity, price, value });
+  }
+
+  const balance = await User.findOne({ where: { user_id }, attributes: ['balance'] });
+  const totalCoinsValue = coins.reduce((total, coin) => total + coin.value, 0);
+
+  res.json({
+    data: {
+      coins: coins,
+      value: totalCoinsValue,
+      balance: balance.dataValues.balance,
+      total: balance.dataValues.balance + totalCoinsValue
+    },
+    error: null
+  });
+});
+
+router.get('/ranking', async (req, res) => {
+  const ranking = await User.findAll({ order: [['balance', 'DESC']] });
+  res.json({ data: ranking, error: null });
 });
 
 router.get('/transactions', async (req, res) => {
@@ -150,42 +178,6 @@ router.post('/sell', async (req, res) => {
   });
 
   res.json({ data: 'Success!', error: null });
-});
-
-router.get('/wallet', async (req, res) => {
-  const user_id = req.user.id;
-  const coins = [];
-  const wallet = await Wallet.findAll({ where: { user_id }, include: [{ model: Stock, as: 'stock' }] });
-
-  for (const position of wallet) {
-    const symbol = position.stock.symbol;
-    const quantity = position.quantity;
-    const price = position.stock.price;
-    const value = quantity * price;
-    coins.push({ symbol, quantity, price, value });
-  }
-
-  const balance = await User.findOne({ where: { user_id }, attributes: ['balance'] });
-  const totalCoinsValue = coins.reduce((total, coin) => total + coin.value, 0);
-
-  res.json({
-    data: {
-      coins: coins,
-      value: totalCoinsValue,
-      balance: balance.dataValues.balance,
-      total: balance.dataValues.balance + totalCoinsValue
-    },
-    error: null
-  });
-});
-
-router.get('/ranking', async (req, res) => {
-
-  const ranking = await User.findAll({ order: [['balance', 'DESC']] });
-  res.json({
-    data: ranking,
-    error: null
-  });
 });
 
 export default router;
