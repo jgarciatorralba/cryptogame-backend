@@ -45,27 +45,32 @@ router.get('/ranking', async (req, res) => {
 });
 
 router.get('/transactions', async (req, res) => {
-  try {
-    const transactions = await Transaction.findAll({ include: [{ model: User, as: 'user' }, { model: Stock, as: 'stock' }] });
-    let result = [];
+  const transactionsRaw = await Transaction.findAll({
+    order: [['transaction_id', 'DESC']],
+    include: [{ model: User, as: 'user' },
+    { model: Stock, as: 'stock' }]
+  });
+  const transactions = [];
 
-    for (let transaction of transactions) {
-      result.push({
-        id: transaction.transaction_id,
-        user: transaction.user.name,
-        symbol: transaction.stock.symbol,
-        coin: transaction.stock.name,
-        type: transaction.type.toLowerCase(),
-        quantity: transaction.quantity,
-        value: transaction.value,
-        date: transaction.createdAt
-      });
-    }
-
-    res.json(result);
-  } catch (error) {
-    res.status(404).json({ data: null, error: 'Unknown error' });
+  for (let transaction of transactionsRaw) {
+    transactions.push({
+      id: transaction.transaction_id,
+      user: transaction.user.name,
+      symbol: transaction.stock.symbol,
+      coin: transaction.stock.name,
+      type: transaction.type.toLowerCase(),
+      quantity: transaction.quantity,
+      value: transaction.value,
+      date: transaction.createdAt
+    });
   }
+
+  const data = {
+    transactions: transactions,
+    count: transactions.length
+  };
+
+  res.json({ data: data, error: null });
 });
 
 router.post('/buy', async (req, res) => {
