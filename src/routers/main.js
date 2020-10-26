@@ -53,7 +53,9 @@ router.get('/transactions', async (req, res) => {
       result.push({
         id: transaction.transaction_id,
         user: transaction.user.name,
+        symbol: transaction.stock.symbol,
         coin: transaction.stock.name,
+        type: transaction.type.toLowerCase(),
         quantity: transaction.quantity,
         value: transaction.value,
         date: transaction.createdAt
