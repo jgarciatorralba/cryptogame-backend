@@ -43,3 +43,7 @@ Content-Type: application/json
   "symbol" : "TRX",
   "quantity": "10000"
 }
+
+###
+GET http://localhost:3000/api/ranking
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjAzNTc2OTQwfQ.A_cAT3rEgcVyuVmrRpXcKqnyLoe02wjj4u8aNUYHU10
