@@ -30,7 +30,7 @@ router.post('/login', async (req, res) => {
   const match = await bcrypt.compare(credentials.password, user.password);
   if (!match) return res.status(400).json({ data: null, error: 'Incorrect password' });
 
-  const accessToken = jwt.sign({ id: user.user_id }, config.app.accessTokenSecret);
+  const accessToken = jwt.sign({ id: user.user_id, role: user.role }, config.app.accessTokenSecret);
   const role = user.role;
   res.json({ data: { accessToken, role }, error: null });
 });
