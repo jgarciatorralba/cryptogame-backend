@@ -29,7 +29,8 @@ router.post('/register', async (req, res) => {
   const user = {
     email: req.body.email,
     password: await bcrypt.hash(req.body.password, config.app.saltRounds),
-    name: req.body.name
+    name: req.body.name,
+    balance: config.app.initialBalance
   };
 
   try {
