@@ -37,6 +37,16 @@ User.init({
     type: DataTypes.FLOAT,
     allowNull: false,
     defaultValue: 0
+  },
+  estimated: {
+    type: DataTypes.FLOAT,
+    allowNull: false,
+    defaultValue: 0
+  },
+  last_total: {
+    type: DataTypes.FLOAT,
+    allowNull: false,
+    defaultValue: 0
   }
 }, {
   sequelize: connection,
