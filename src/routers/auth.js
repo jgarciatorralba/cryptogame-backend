@@ -4,10 +4,21 @@ import jwt from 'jsonwebtoken';
 import User from '../models/user.js';
 import Stock from '../models/stock.js';
 import config from '../config/app-config.js';
+import multer from 'multer';
+import path from 'path'
 
 const router = express.Router();
 
-router.post('/register', async (req, res) => {
+const storage = multer.diskStorage({
+  destination: './uploads/',
+  filename: function(req, file, cb){
+    cb(null, req.body.name + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({storage: storage}).single('avatar');
+
+router.post('/register', upload, async (req, res) => {
   if (req.body.email == null) {
     return res
       .status(400)
