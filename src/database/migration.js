@@ -33,7 +33,7 @@ const coins = [
   { symbol: 'NEO', pair: 'NEOUSDT', name: 'Neo' },
   { symbol: 'ATOM', pair: 'ATOMUSDT', name: 'Cosmos' },
   { symbol: 'ALGO', pair: 'ALGOUSDT', name: 'Algorand' },
-  { symbol: 'IOTA', pair: 'IOTAUSDT', name: 'IOTA' },
+  { symbol: 'MIOTA', pair: 'MIOTAUSDT', name: 'IOTA' },
   { symbol: 'DASH', pair: 'DASHUSDT', name: 'Dash' },
   { symbol: 'VET', pair: 'VETUSDT', name: 'VeChain' },
   { symbol: 'ETC', pair: 'ETCUSDT', name: 'Ethereum Classic' },
