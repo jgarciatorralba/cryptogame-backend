@@ -37,9 +37,13 @@ router.get('/wallet', async (req, res) => {
 });
 
 router.get('/ranking', async (req, res) => {
-  const usersRaw = await User.findAll({ order: [['balance', 'DESC']] });
+  const usersRaw = await User.findAll({ order: ['ranking'] });
   const users = usersRaw.map(user => {
-    return { name: user.name, avatar: user.avatar, balance: user.balance };
+    return {
+      name: user.name,
+      avatar: user.avatar,
+      total: user.estimated + user.balance
+    };
   });
   res.json({ data: users, error: null });
 });
