@@ -50,7 +50,6 @@ router.get('/ranking', async (req, res) => {
 });
 
 router.get('/trades/:page&:limit', async (req, res) => {
-
   const page = parseInt(req.params.page);
   const limit = parseInt(req.params.limit);
   const offset = (page - 1) * limit;
@@ -58,8 +57,8 @@ router.get('/trades/:page&:limit', async (req, res) => {
   const tradeRaw = await Trade.findAndCountAll({
     order: [['trade_id', 'DESC']],
     include: [{ model: User, as: 'user' }, { model: Stock, as: 'stock' }],
-    limit: limit, 
-    offset: offset 
+    limit: limit,
+    offset: offset
   });
 
   const trades = [];
@@ -196,6 +195,33 @@ router.post('/sell', async (req, res) => {
   });
 
   res.json({ data: 'Success!', error: null });
+});
+
+router.get('/wallet/:coin', async (req, res) => {
+  const user_id = req.user.id;
+  const symbol = req.params.coin.toUpperCase();
+  const stock = await Stock.findOne({ where: { symbol }, attributes: ['stock_id'] });
+  if (stock == null) {
+    return res
+      .status(400)
+      .json({ data: null, error: 'Bad Request: Invalid coin symbol' });
+  }
+  const stock_id = stock.stock_id;
+  const wallet = await Wallet.findOne({ where: { user_id, stock_id }, attributes: ['quantity'] });
+  const quantity = wallet == null ? 0 : wallet.quantity;
+  res.json({ data: { symbol, quantity }, error: null });
+});
+
+router.get('/coin/:coin', async (req, res) => {
+  const symbol = req.params.coin.toUpperCase();
+  const stock = await Stock.findOne({ where: { symbol }, attributes: ['price'] });
+  if (stock == null) {
+    return res
+      .status(400)
+      .json({ data: null, error: 'Bad Request: Invalid coin symbol' });
+  }
+  const price = stock.price;
+  res.json({ data: { symbol, price }, error: null });
 });
 
 export default router;
