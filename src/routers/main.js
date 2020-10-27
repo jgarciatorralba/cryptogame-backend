@@ -3,7 +3,7 @@ import authMiddleware from '../middlewares/auth.js';
 import Stock from '../models/stock.js';
 import User from '../models/user.js';
 import Wallet from '../models/wallet.js';
-import Transaction from '../models/transaction.js';
+import Trade from '../models/trade.js';
 
 const router = express.Router();
 
@@ -37,39 +37,40 @@ router.get('/wallet', async (req, res) => {
 });
 
 router.get('/ranking', async (req, res) => {
-  const usersRaw = await User.findAll({ order: [['balance', 'DESC']] });
+  const usersRaw = await User.findAll({ order: ['ranking'] });
   const users = usersRaw.map(user => {
-    return { name: user.name, avatar: user.avatar, balance: user.balance };
+    return {
+      position: user.ranking,
+      name: user.name,
+      avatar: user.avatar,
+      total: user.estimated + user.balance
+    };
   });
   res.json({ data: users, error: null });
 });
 
-router.get('/transactions', async (req, res) => {
-  const transactionsRaw = await Transaction.findAll({
-    order: [['transaction_id', 'DESC']],
+router.get('/trades', async (req, res) => {
+  const tradeRaw = await Trade.findAll({
+    order: [['trade_id', 'DESC']],
     include: [{ model: User, as: 'user' },
     { model: Stock, as: 'stock' }]
   });
-  const transactions = [];
+  const trades = [];
 
-  for (let transaction of transactionsRaw) {
-    transactions.push({
-      id: transaction.transaction_id,
-      user: transaction.user.name,
-      symbol: transaction.stock.symbol,
-      coin: transaction.stock.name,
-      type: transaction.type.toLowerCase(),
-      quantity: transaction.quantity,
-      value: transaction.value,
-      date: transaction.createdAt
+  for (let trade of tradeRaw) {
+    trades.push({
+      id: trade.trade_id,
+      user: trade.user.name,
+      symbol: trade.stock.symbol,
+      coin: trade.stock.name,
+      type: trade.type.toLowerCase(),
+      quantity: trade.quantity,
+      value: trade.value,
+      date: trade.createdAt
     });
   }
 
-  const data = {
-    transactions: transactions,
-    count: transactions.length
-  };
-
+  const data = { trades: trades, count: trades.length };
   res.json({ data: data, error: null });
 });
 
@@ -121,7 +122,7 @@ router.post('/buy', async (req, res) => {
     await wallet.save();
   }
 
-  await Transaction.create({
+  await Trade.create({
     user_id: user.user_id,
     stock_id: stock.stock_id,
     type: 'BUY',
@@ -179,7 +180,7 @@ router.post('/sell', async (req, res) => {
   user.balance += value;
   await user.save();
 
-  await Transaction.create({
+  await Trade.create({
     user_id: user.user_id,
     stock_id: stock.stock_id,
     type: 'SELL',

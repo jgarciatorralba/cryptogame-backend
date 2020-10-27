@@ -4,10 +4,10 @@ import connection from '../database/connection.js';
 import User from './user.js';
 import Stock from './stock.js';
 
-class Transaction extends sequelize.Model { };
+class Trade extends sequelize.Model { };
 
-Transaction.init({
-  transaction_id: {
+Trade.init({
+  trade_id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true,
@@ -43,11 +43,11 @@ Transaction.init({
   }
 }, {
   sequelize: connection,
-  modelName: 'transaction'
+  modelName: 'trade'
 });
 
-Transaction.belongsTo(User, { foreignKey: 'user_id', onDelete: 'CASCADE'});
-Transaction.belongsTo(Stock, { foreignKey: 'stock_id', onDelete: 'CASCADE'});
+Trade.belongsTo(User, { foreignKey: 'user_id' });
+Trade.belongsTo(Stock, { foreignKey: 'stock_id' });
 
-export default Transaction;
+export default Trade;
 
