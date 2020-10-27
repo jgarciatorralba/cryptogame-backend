@@ -49,15 +49,22 @@ router.get('/ranking', async (req, res) => {
   res.json({ data: users, error: null });
 });
 
-router.get('/trades', async (req, res) => {
-  const tradeRaw = await Trade.findAll({
+router.get('/trades/:page&:limit', async (req, res) => {
+
+  const page = parseInt(req.params.page);
+  const limit = parseInt(req.params.limit);
+  const offset = (page - 1) * limit;
+
+  const tradeRaw = await Trade.findAndCountAll({
     order: [['trade_id', 'DESC']],
-    include: [{ model: User, as: 'user' },
-    { model: Stock, as: 'stock' }]
+    include: [{ model: User, as: 'user' }, { model: Stock, as: 'stock' }],
+    limit: limit, 
+    offset: offset 
   });
+
   const trades = [];
 
-  for (let trade of tradeRaw) {
+  for (let trade of tradeRaw.rows) {
     trades.push({
       id: trade.trade_id,
       user: trade.user.name,
@@ -70,8 +77,8 @@ router.get('/trades', async (req, res) => {
     });
   }
 
-  const data = { trades: trades, count: trades.length };
-  res.json({ data: data, error: null });
+  const data = { trades: trades, count: tradeRaw.count };
+  res.json({ data: data, currentPage: page, totalPages: Math.ceil(data.count / limit), error: null });
 });
 
 router.post('/buy', async (req, res) => {
