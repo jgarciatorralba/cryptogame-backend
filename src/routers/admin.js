@@ -17,6 +17,13 @@ router.get('/coin/:coinId', async (req, res) => {
   res.json({ data: {symbol: coin.symbol, pair: coin.pair, name: coin.name}, error: null });
 });
 
+router.delete('/coin/:coinId', async (req, res) => {
+  const coinId = req.params.coinId;
+  await Stock.destroy({ where: { stock_id: coinId } })
+  res.json({ data: "Coin removed!", error: null });
+});
+
+
 router.get('/users/:page&:limit', async (req, res) => {
   const page   = parseInt(req.params.page);
   const limit  = parseInt(req.params.limit);

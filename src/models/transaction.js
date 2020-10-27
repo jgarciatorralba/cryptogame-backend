@@ -18,7 +18,7 @@ Transaction.init({
     allowNull: false,
     references: {
       model: User,
-      key: 'user_id'
+      key: 'user_id',
     }
   },
   stock_id: {
@@ -26,7 +26,7 @@ Transaction.init({
     allowNull: false,
     references: {
       model: Stock,
-      key: 'stock_id'
+      key: 'stock_id',
     }
   },
   type: {
@@ -46,8 +46,8 @@ Transaction.init({
   modelName: 'transaction'
 });
 
-Transaction.belongsTo(User, { foreignKey: 'user_id' });
-Transaction.belongsTo(Stock, { foreignKey: 'stock_id' });
+Transaction.belongsTo(User, { foreignKey: 'user_id', onDelete: 'CASCADE'});
+Transaction.belongsTo(Stock, { foreignKey: 'stock_id', onDelete: 'CASCADE'});
 
 export default Transaction;
 
