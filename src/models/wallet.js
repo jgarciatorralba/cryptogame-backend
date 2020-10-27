@@ -32,7 +32,12 @@ Wallet.init({
   quantity: {
     type: DataTypes.FLOAT,
     allowNull: false,
-    defaultValue: 10000
+    defaultValue: 0
+  },
+  value: {
+    type: DataTypes.FLOAT,
+    allowNull: false,
+    defaultValue: 0
   }
 }, {
   sequelize: connection,

@@ -79,13 +79,13 @@ router.post('/login', async (req, res) => {
       name: user.name,
       avatar: user.avatar,
       role: user.role,
-      walletBalance: 0,
-      walletEstimated: 0,
-      walletTotal: 0,
+      walletBalance: user.balance,
+      walletEstimated: user.estimated,
+      walletTotal: user.balance + user.estimated,
       walletChange: 0,
       mostBought: 'Bitcoin',
       mostBoughtSymbol: 'BTC',
-      ranking: 1
+      ranking: user.ranking
     }
   };
 

@@ -43,6 +43,11 @@ User.init({
     allowNull: false,
     defaultValue: 0
   },
+  ranking: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    defaultValue: 0
+  },
   last_total: {
     type: DataTypes.FLOAT,
     allowNull: false,

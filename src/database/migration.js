@@ -67,7 +67,7 @@ const wallets = [
   { user_id: 1, stock_id: 8, quantity: 10000 },
   { user_id: 2, stock_id: 1, quantity: 0.123 },
   { user_id: 2, stock_id: 2, quantity: 5.436 },
-  { user_id: 2, stock_id: 3, quantity: 10.91 },
+  { user_id: 2, stock_id: 3, quantity: 10.99 },
   { user_id: 2, stock_id: 8, quantity: 10000 }
 ].forEach(wallet => Wallet.create(wallet));
 
