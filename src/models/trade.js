@@ -43,6 +43,8 @@ Trade.init({
   }
 }, {
   sequelize: connection,
+  paranoid: true,
+  deletedAt: 'destroyTime',
   modelName: 'trade'
 });
 
