@@ -32,9 +32,7 @@ router.post('/coin', async (req, res) => {
 router.get('/users/:page&:limit', async (req, res) => {
   const page = parseInt(req.params.page);
   const limit = parseInt(req.params.limit);
-
   const offset = (page - 1) * limit;
-
   const users = await User.findAndCountAll({ attributes: ['user_id', 'email', 'name', 'avatar', 'role', 'balance'], limit: limit, offset: offset });
 
   res.json(
@@ -45,5 +43,14 @@ router.get('/users/:page&:limit', async (req, res) => {
       error: null
     });
 });
+
+router.get('/user/:userId', async (req, res) => {
+  const userId = req.params.userId;
+  const user = await User.findOne({ where: { user_id: userId }, attributes: ['user_id', 'email', 'name', 'avatar', 'role', 'balance'] });
+  res.json({ data: user, error: null });
+});
+
+
+
 
 export default router;
