@@ -21,6 +21,13 @@ router.delete('/coin/:coinId', async (req, res) => {
   res.json({ data: "Coin removed!", error: null });
 });
 
+router.post('/coin', async (req, res) => {
+  const coin = req.body
+  console.log(coin)
+  await Stock.create(coin);
+  res.json({ data: "Coin added", error: null });
+})
+
 
 router.get('/users/:page&:limit', async (req, res) => {
   const page = parseInt(req.params.page);
