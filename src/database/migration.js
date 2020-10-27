@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import connection from './connection.js';
 import User from '../models/user.js';
 import Stock from '../models/stock.js';
-import Transaction from '../models/transaction.js';
+import Trade from '../models/trade.js';
 import Wallet from '../models/wallet.js';
 import config from '../config/app-config.js';
 
@@ -71,8 +71,8 @@ const wallets = [
   { user_id: 2, stock_id: 8, quantity: 10000 }
 ].forEach(wallet => Wallet.create(wallet));
 
-// insert transactions
-const transactions = [
+// insert trades
+const trades = [
   { user_id: 1, stock_id: 1, type: 'BUY', quantity: 0.123, value: 13114.3 },
   { user_id: 1, stock_id: 2, type: 'SELL', quantity: 5.43, value: 2.6538 },
   { user_id: 2, stock_id: 3, type: 'BUY', quantity: 10.91, value: 412.1 },
@@ -81,4 +81,4 @@ const transactions = [
   { user_id: 1, stock_id: 2, type: 'SELL', quantity: 8.86, value: 2.6538 },
   { user_id: 2, stock_id: 3, type: 'BUY', quantity: 10.91, value: 412.1 },
   { user_id: 2, stock_id: 8, type: 'SELL', quantity: 4200, value: 0.0026366 }
-].forEach(transaction => Transaction.create(transaction));
+].forEach(trade => Trade.create(trade));

@@ -1,4 +1,3 @@
-import WebSocket from 'ws';
 import Stock from '../models/stock.js';
 import User from '../models/user.js';
 import Wallet from '../models/wallet.js';
