@@ -17,7 +17,7 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:3000/api/trades/2&5
+GET http://localhost:3000/api/trades/1&5
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjAzNTc2OTQwfQ.A_cAT3rEgcVyuVmrRpXcKqnyLoe02wjj4u8aNUYHU10
 
 ###
@@ -103,11 +103,22 @@ Content-Type: application/json
 
 
 ###
-PATCH http://localhost:3000/admin/user/4
+PATCH http://localhost:3000/user
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6MSwiaWF0IjoxNjAzNzE3Mzk4fQ.4kl5UmIaEwUpq5F87BNF90iduwPdInDSw_6OxvzkKiI
 Content-Type: application/json
 
 { 
-    "name": "MartaNew",
-    "email": "marta@marta.com"
+    "email": "admin@marta.com",
+    "password": "123456",
+    "name": "admin1"
 }
+
+###
+DELETE http://localhost:3000/user
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6MSwiaWF0IjoxNjAzNzE3Mzk4fQ.4kl5UmIaEwUpq5F87BNF90iduwPdInDSw_6OxvzkKiI
+Content-Type: application/json
+
+###
+GET http://localhost:3000/user
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6MSwiaWF0IjoxNjAzNzE3Mzk4fQ.4kl5UmIaEwUpq5F87BNF90iduwPdInDSw_6OxvzkKiI
+Content-Type: application/json
