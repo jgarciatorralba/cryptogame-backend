@@ -18,7 +18,7 @@ router.get('/coin/:coinId', async (req, res) => {
 router.delete('/coin/:coinId', async (req, res) => {
   const coinId = req.params.coinId;
   await Stock.destroy({ where: { stock_id: coinId } })
-  res.json({ data: "Coin removed!", error: null });
+  res.json({ data: "Coin soft deleted!", error: null });
 });
 
 router.post('/coin', async (req, res) => {
@@ -48,6 +48,12 @@ router.get('/user/:userId', async (req, res) => {
   const userId = req.params.userId;
   const user = await User.findOne({ where: { user_id: userId }, attributes: ['user_id', 'email', 'name', 'avatar', 'role', 'balance'] });
   res.json({ data: user, error: null });
+});
+
+router.delete('/user/:userId', async (req, res) => {
+  const userId = req.params.userId;
+  await User.destroy({ where: { user_id: userId } })
+  res.json({ data: "User soft deleted!", error: null });
 });
 
 

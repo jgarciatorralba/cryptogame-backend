@@ -88,3 +88,7 @@ GET http://localhost:3000/admin/user/1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6MSwiaWF0IjoxNjAzNzE3Mzk4fQ.4kl5UmIaEwUpq5F87BNF90iduwPdInDSw_6OxvzkKiI
 Content-Type: application/json
 
+###
+DELETE http://localhost:3000/admin/user/3
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6MSwiaWF0IjoxNjAzNzE3Mzk4fQ.4kl5UmIaEwUpq5F87BNF90iduwPdInDSw_6OxvzkKiI
+Content-Type: application/json
