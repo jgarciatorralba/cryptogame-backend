@@ -207,7 +207,13 @@ router.get('/wallet/:coin', async (req, res) => {
       .json({ data: null, error: 'Bad Request: Invalid coin symbol' });
   }
   const stock_id = stock.stock_id;
-  const quantity = await Wallet.findOne({ where: { user_id, stock_id }, attributes: ['quantity'] });
+  const wallet = await Wallet.findOne({ where: { user_id, stock_id }, attributes: ['quantity'] });
+  if (wallet == null) {
+    return res
+      .status(400)
+      .json({ data: null, error: 'Bad Request: User has no coin of that symbol' });
+  }
+  const quantity = wallet.quantity;
   res.json({ data: { symbol, quantity }, error: null });
 });
 
