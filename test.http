@@ -2,8 +2,8 @@ POST http://localhost:3000/register
 Content-Type: application/json
 
 {
-  "email" : "rudolf@assembler.com",
-  "name" : "Rudolf",
+  "email" : "marta@assembler.com",
+  "name" : "Marta",
   "password" : "123456"
 }
 
@@ -92,3 +92,14 @@ Content-Type: application/json
 DELETE http://localhost:3000/admin/user/3
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6MSwiaWF0IjoxNjAzNzE3Mzk4fQ.4kl5UmIaEwUpq5F87BNF90iduwPdInDSw_6OxvzkKiI
 Content-Type: application/json
+
+
+###
+PATCH http://localhost:3000/admin/user/4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6MSwiaWF0IjoxNjAzNzE3Mzk4fQ.4kl5UmIaEwUpq5F87BNF90iduwPdInDSw_6OxvzkKiI
+Content-Type: application/json
+
+{ 
+    "name": "MartaNew",
+    "email": "marta@marta.com"
+}

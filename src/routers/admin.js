@@ -56,6 +56,13 @@ router.delete('/user/:userId', async (req, res) => {
   res.json({ data: "User soft deleted!", error: null });
 });
 
+router.patch('/user/:userId', async (req, res) => {
+  const userId = req.params.userId;
+  const userUpdate = req.body;
+  await User.update(userUpdate, { where: {user_id: userId} });
+  res.json({ data: "User updated!", error: null });
+});
+
 
 
 
