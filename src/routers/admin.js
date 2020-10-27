@@ -15,12 +15,24 @@ router.get('/coin/:coinId', async (req, res) => {
   res.json({ data: { symbol: coin.symbol, pair: coin.pair, name: coin.name }, error: null });
 });
 
+router.delete('/coin/:coinId', async (req, res) => {
+  const coinId = req.params.coinId;
+  await Stock.destroy({ where: { stock_id: coinId } })
+  res.json({ data: "Coin soft deleted!", error: null });
+});
+
+router.post('/coin', async (req, res) => {
+  const coin = req.body
+  console.log(coin)
+  await Stock.create(coin);
+  res.json({ data: "Coin added", error: null });
+})
+
+
 router.get('/users/:page&:limit', async (req, res) => {
   const page = parseInt(req.params.page);
   const limit = parseInt(req.params.limit);
-
   const offset = (page - 1) * limit;
-
   const users = await User.findAndCountAll({ attributes: ['user_id', 'email', 'name', 'avatar', 'role', 'balance'], limit: limit, offset: offset });
 
   res.json(
@@ -31,5 +43,25 @@ router.get('/users/:page&:limit', async (req, res) => {
       error: null
     });
 });
+
+router.get('/user/:userId', async (req, res) => {
+  const userId = req.params.userId;
+  const user = await User.findOne({ where: { user_id: userId }, attributes: ['user_id', 'email', 'name', 'avatar', 'role', 'balance'] });
+  res.json({ data: user, error: null });
+});
+
+router.delete('/user/:userId', async (req, res) => {
+  const userId = req.params.userId;
+  await User.destroy({ where: { user_id: userId } })
+  res.json({ data: "User soft deleted!", error: null });
+});
+
+router.patch('/user/:userId', async (req, res) => {
+  const userId = req.params.userId;
+  const userUpdate = req.body;
+  await User.update(userUpdate, { where: {user_id: userId} });
+  res.json({ data: "User updated!", error: null });
+});
+
 
 export default router;

@@ -55,6 +55,8 @@ User.init({
   }
 }, {
   sequelize: connection,
+  paranoid: true,
+  deletedAt: 'destroyTime',
   modelName: 'user'
 });
 

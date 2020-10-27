@@ -9,7 +9,7 @@ Stock.init({
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true,
-    allowNull: false
+    allowNull: false,
   },
   symbol: {
     type: DataTypes.STRING,
@@ -57,6 +57,8 @@ Stock.init({
   }
 }, {
   sequelize: connection,
+  paranoid: true,
+  deletedAt: 'destroyTime',
   modelName: 'stock'
 });
 

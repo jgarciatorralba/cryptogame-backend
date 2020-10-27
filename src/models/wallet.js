@@ -41,10 +41,12 @@ Wallet.init({
   }
 }, {
   sequelize: connection,
+  paranoid: true,
+  deletedAt: 'destroyTime',
   modelName: 'wallet'
 });
 
-Wallet.belongsTo(User, { foreignKey: 'user_id' });
-Wallet.belongsTo(Stock, { foreignKey: 'stock_id' });
+Wallet.belongsTo(User, { foreignKey: 'user_id', onDelete: 'CASCADE' });
+Wallet.belongsTo(Stock, { foreignKey: 'stock_id', onDelete: 'CASCADE'});
 
 export default Wallet;
