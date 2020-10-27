@@ -11,7 +11,7 @@ await connection.sync();
 
 // insert users
 const users = [
-  { email: 'admin', password: await bcrypt.hash('admin', config.app.saltRounds), name: 'admin', role: 1, balance: 10000 },
+  { email: 'admin', password: await bcrypt.hash('admin', config.app.saltRounds), name: 'Admin', role: 1, balance: 10000 },
   { email: 'christian@assemblerschool.com', password: await bcrypt.hash('123456', config.app.saltRounds), name: 'Chris', role: 0, balance: 10000 },
 ].forEach(user => User.create(user));
 

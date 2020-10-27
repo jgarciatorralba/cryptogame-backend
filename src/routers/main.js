@@ -40,6 +40,7 @@ router.get('/ranking', async (req, res) => {
   const usersRaw = await User.findAll({ order: ['ranking'] });
   const users = usersRaw.map(user => {
     return {
+      position: user.ranking,
       name: user.name,
       avatar: user.avatar,
       total: user.estimated + user.balance
