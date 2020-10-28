@@ -3,9 +3,16 @@ import Stock from '../models/stock.js';
 
 const router = express.Router();
 
-router.get('/coins', async (req, res) => {
+router.get('/coins/:page&:limit', async (req, res) => {
+  const page = parseInt(req.params.page);
+  const limit = parseInt(req.params.limit);
+  const offset = (page - 1) * limit;
+
+
   const coins = [];
-  for (const coin of await Stock.findAll()) {
+  const coinsWithPageCount = await Stock.findAndCountAll({limit: limit, offset: offset})
+  
+  for (const coin of coinsWithPageCount.rows) {
     coins.push({
       id: coin.stock_id,
       symbol: coin.symbol,
@@ -20,7 +27,7 @@ router.get('/coins', async (req, res) => {
       image: `https://static.coincap.io/assets/icons/${coin.symbol.toLowerCase()}@2x.png`
     });
   }
-  res.json({ data: coins, error: null });
+  res.json({ data: coins, currentPage: page, totalPages: Math.ceil(coinsWithPageCount.count / limit), error: null });
 });
 
 router.get('/coin/:coin', async (req, res) => {
