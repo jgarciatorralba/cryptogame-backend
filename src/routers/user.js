@@ -23,9 +23,9 @@ router.get('/', async (req, res) => {
 
 router.patch('/', avatarMiddleware.single('avatar'), async (req, res) => {
   const userUpdate = {};
-  if (req.body.email) userUpdate.email = req.body.email;
-  if (req.body.password) userUpdate.password = await bcrypt.hash(req.body.password, config.app.saltRounds);
-  if (req.body.name) userUpdate.name = req.body.name;
+  if (req.body.email && req.body.email !== '') userUpdate.email = req.body.email;
+  if (req.body.password && req.body.password !== '') userUpdate.password = await bcrypt.hash(req.body.password, config.app.saltRounds);
+  if (req.body.name && req.body.name !== '') userUpdate.name = req.body.name;
   if (req.file) userUpdate.avatar = req.file.filename;
   await User.update(userUpdate, { where: { user_id: req.user.id } });
   res.json({ data: 'User updated!', error: null });
