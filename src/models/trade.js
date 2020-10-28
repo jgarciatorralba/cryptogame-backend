@@ -18,7 +18,7 @@ Trade.init({
     allowNull: false,
     references: {
       model: User,
-      key: 'user_id',
+      key: 'user_id'
     }
   },
   stock_id: {
@@ -26,7 +26,7 @@ Trade.init({
     allowNull: false,
     references: {
       model: Stock,
-      key: 'stock_id',
+      key: 'stock_id'
     }
   },
   type: {
