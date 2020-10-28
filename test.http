@@ -22,22 +22,20 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxN
 
 ###
 GET http://localhost:3000/api/coins
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjAzNTc2OTQwfQ.A_cAT3rEgcVyuVmrRpXcKqnyLoe02wjj4u8aNUYHU10
-
-###
-GET http://localhost:3000/api/wallet
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjAzNTc2OTQwfQ.A_cAT3rEgcVyuVmrRpXcKqnyLoe02wjj4u8aNUYHU10
-
-###
-GET http://localhost:3000/api/wallet/eth
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjAzNTc2OTQwfQ.A_cAT3rEgcVyuVmrRpXcKqnyLoe02wjj4u8aNUYHU10
 
 ###
 GET http://localhost:3000/api/coin/eth
+
+###
+GET http://localhost:3000/user/wallet
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjAzNTc2OTQwfQ.A_cAT3rEgcVyuVmrRpXcKqnyLoe02wjj4u8aNUYHU10
 
 ###
-POST http://localhost:3000/api/buy
+GET http://localhost:3000/user/wallet/eth
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjAzNTc2OTQwfQ.A_cAT3rEgcVyuVmrRpXcKqnyLoe02wjj4u8aNUYHU10
+
+###
+POST http://localhost:3000/user/buy
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjAzNTc2OTQwfQ.A_cAT3rEgcVyuVmrRpXcKqnyLoe02wjj4u8aNUYHU10
 Content-Type: application/json
 
@@ -47,7 +45,7 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:3000/api/sell
+POST http://localhost:3000/user/sell
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjAzNTc2OTQwfQ.A_cAT3rEgcVyuVmrRpXcKqnyLoe02wjj4u8aNUYHU10
 Content-Type: application/json
 
@@ -65,15 +63,8 @@ GET http://localhost:3000/admin/coin/1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6MSwiaWF0IjoxNjAzNzExOTc5fQ.h-VUPcMOgWjGft0_4n6vIyWBsyzsyzUZPH_vX60a5i4
 
 ###
-GET http://localhost:3000/admin/coin/1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6MSwiaWF0IjoxNjAzNzE3Mzk4fQ.4kl5UmIaEwUpq5F87BNF90iduwPdInDSw_6OxvzkKiI
-Content-Type: application/json
-
-###
 DELETE http://localhost:3000/admin/coin/12
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6MSwiaWF0IjoxNjAzNzE3Mzk4fQ.4kl5UmIaEwUpq5F87BNF90iduwPdInDSw_6OxvzkKiI
-Content-Type: application/json
-
 
 ###
 GET http://localhost:3000/admin/users/2&2
@@ -84,12 +75,12 @@ Content-Type: application/json
 POST  http://localhost:3000/admin/coin
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6MSwiaWF0IjoxNjAzNzE3Mzk4fQ.4kl5UmIaEwUpq5F87BNF90iduwPdInDSw_6OxvzkKiI
 Content-Type: application/json
- 
-  { 
-    "symbol": "DCR", 
-    "pair": "DCRUSDT", 
-    "name": "Decred" 
-  }
+
+{ 
+  "symbol": "DCR", 
+  "pair": "DCRUSDT", 
+  "name": "Decred" 
+}
 
 ###
 GET http://localhost:3000/admin/user/1
@@ -101,16 +92,15 @@ DELETE http://localhost:3000/admin/user/3
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6MSwiaWF0IjoxNjAzNzE3Mzk4fQ.4kl5UmIaEwUpq5F87BNF90iduwPdInDSw_6OxvzkKiI
 Content-Type: application/json
 
-
 ###
 PATCH http://localhost:3000/user
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6MSwiaWF0IjoxNjAzNzE3Mzk4fQ.4kl5UmIaEwUpq5F87BNF90iduwPdInDSw_6OxvzkKiI
 Content-Type: application/json
 
 { 
-    "email": "admin@marta.com",
-    "password": "123456",
-    "name": "admin1"
+  "email": "admin@marta.com",
+  "password": "123456",
+  "name": "admin1"
 }
 
 ###

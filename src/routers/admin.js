@@ -9,6 +9,14 @@ const router = express.Router();
 router.use(authMiddleware);
 router.use(adminMiddleware);
 
+// Coin CRuD
+router.post('/coin', async (req, res) => {
+  const coin = req.body;
+  console.log(coin);
+  await Stock.create(coin);
+  res.json({ data: "Coin added", error: null });
+});
+
 router.get('/coin/:coinId', async (req, res) => {
   const coinId = req.params.coinId;
   const coin = await Stock.findOne({ where: { stock_id: coinId } });
@@ -17,18 +25,11 @@ router.get('/coin/:coinId', async (req, res) => {
 
 router.delete('/coin/:coinId', async (req, res) => {
   const coinId = req.params.coinId;
-  await Stock.destroy({ where: { stock_id: coinId } })
+  await Stock.destroy({ where: { stock_id: coinId } });
   res.json({ data: "Coin soft deleted!", error: null });
 });
 
-router.post('/coin', async (req, res) => {
-  const coin = req.body
-  console.log(coin)
-  await Stock.create(coin);
-  res.json({ data: "Coin added", error: null });
-})
-
-
+// User cRUD
 router.get('/users/:page&:limit', async (req, res) => {
   const page = parseInt(req.params.page);
   const limit = parseInt(req.params.limit);
@@ -50,18 +51,17 @@ router.get('/user/:userId', async (req, res) => {
   res.json({ data: user, error: null });
 });
 
-router.delete('/user/:userId', async (req, res) => {
-  const userId = req.params.userId;
-  await User.destroy({ where: { user_id: userId } })
-  res.json({ data: "User soft deleted!", error: null });
-});
-
 router.patch('/user/:userId', async (req, res) => {
   const userId = req.params.userId;
   const userUpdate = req.body;
-  await User.update(userUpdate, { where: {user_id: userId} });
+  await User.update(userUpdate, { where: { user_id: userId } });
   res.json({ data: "User updated!", error: null });
 });
 
+router.delete('/user/:userId', async (req, res) => {
+  const userId = req.params.userId;
+  await User.destroy({ where: { user_id: userId } });
+  res.json({ data: "User soft deleted!", error: null });
+});
 
 export default router;

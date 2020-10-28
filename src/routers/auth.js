@@ -2,7 +2,6 @@ import express from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import User from '../models/user.js';
-import Stock from '../models/stock.js';
 import config from '../config/app-config.js';
 
 const router = express.Router();
@@ -90,25 +89,6 @@ router.post('/login', async (req, res) => {
   };
 
   res.json({ data: data, error: null });
-});
-
-router.get('/api/coins', async (req, res) => {
-  const response = [];
-  for (const coin of await Stock.findAll()) {
-    response.push({
-      symbol: coin.symbol,
-      pair: coin.pair,
-      name: coin.name,
-      price: coin.price,
-      change: coin.change,
-      high: coin.high,
-      low: coin.low,
-      volume: coin.volume,
-      trades: coin.trades,
-      image: `https://static.coincap.io/assets/icons/${coin.symbol.toLowerCase()}@2x.png`
-    });
-  }
-  res.json(response);
 });
 
 export default router;
