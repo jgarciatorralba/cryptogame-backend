@@ -77,7 +77,7 @@ router.post('/login', async (req, res) => {
     user: {
       email: user.email,
       name: user.name,
-      avatar: user.avatar ? path.posix.join(config.app.serverDomain, 'avatar', user.avatar) : null,
+      avatar: user.avatar ? 'http://' + path.posix.join(config.app.serverDomain, 'avatar', user.avatar) : null,
       role: user.role,
       walletBalance: user.balance,
       walletEstimated: user.estimated,
