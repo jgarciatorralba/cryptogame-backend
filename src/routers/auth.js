@@ -1,5 +1,6 @@
 import express from 'express';
 import bcrypt from 'bcrypt';
+import path from 'path';
 import jwt from 'jsonwebtoken';
 import User from '../models/user.js';
 import config from '../config/app-config.js';
@@ -76,12 +77,11 @@ router.post('/login', async (req, res) => {
     user: {
       email: user.email,
       name: user.name,
-      avatar: user.avatar,
+      avatar: user.avatar ? path.posix.join(config.app.serverDomain, 'avatar', user.avatar) : null,
       role: user.role,
       walletBalance: user.balance,
       walletEstimated: user.estimated,
       walletTotal: user.balance + user.estimated,
-      walletChange: 0,
       mostBought: 'Bitcoin',
       mostBoughtSymbol: 'BTC',
       ranking: user.ranking

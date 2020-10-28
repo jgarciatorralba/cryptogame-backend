@@ -13,11 +13,10 @@ router.use(authMiddleware);
 router.get('/ranking', async (req, res) => {
   const usersRaw = await User.findAll({ order: ['ranking'] });
   const users = usersRaw.map(user => {
-    const avatar = user.avatar ? path.posix.join(config.app.serverDomain, 'avatar', user.avatar) : null;
     return {
       position: user.ranking,
       name: user.name,
-      avatar: avatar,
+      avatar: user.avatar ? path.posix.join(config.app.serverDomain, 'avatar', user.avatar) : null,
       total: user.estimated + user.balance
     };
   });
