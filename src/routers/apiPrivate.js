@@ -16,7 +16,7 @@ router.get('/ranking', async (req, res) => {
     return {
       position: user.ranking,
       name: user.name,
-      avatar: user.avatar ? path.posix.join(config.app.serverDomain, 'avatar', user.avatar) : null,
+      avatar: user.avatar ? 'http://' + path.posix.join(config.app.serverDomain, 'avatar', user.avatar) : null,
       total: user.estimated + user.balance
     };
   });

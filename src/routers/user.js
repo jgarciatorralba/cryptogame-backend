@@ -17,15 +17,15 @@ router.use(authMiddleware);
 router.get('/', async (req, res) => {
   const userId = req.user.id;
   const user = await User.findOne({ where: { user_id: userId }, attributes: ['user_id', 'email', 'name', 'avatar', 'role', 'balance', 'estimated', 'ranking'] });
-  user.avatar = user.avatar ? path.posix.join(config.app.serverDomain, 'avatar', user.avatar) : null;
+  user.avatar = user.avatar ? 'http://' + path.posix.join(config.app.serverDomain, 'avatar', user.avatar) : null;
   res.json({ data: user, error: null });
 });
 
 router.patch('/', avatarMiddleware.single('avatar'), async (req, res) => {
   const userUpdate = {};
-  if (req.body.email) userUpdate.email = req.body.email;
-  if (req.body.password) userUpdate.password = await bcrypt.hash(req.body.password, config.app.saltRounds);
-  if (req.body.name) userUpdate.name = req.body.name;
+  if (req.body.email && req.body.email !== '') userUpdate.email = req.body.email;
+  if (req.body.password && req.body.password !== '') userUpdate.password = await bcrypt.hash(req.body.password, config.app.saltRounds);
+  if (req.body.name && req.body.name !== '') userUpdate.name = req.body.name;
   if (req.file) userUpdate.avatar = req.file.filename;
   await User.update(userUpdate, { where: { user_id: req.user.id } });
   res.json({ data: 'User updated!', error: null });
