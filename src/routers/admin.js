@@ -12,9 +12,18 @@ router.use(adminMiddleware);
 // Coin CRuD
 router.post('/coin', async (req, res) => {
   const coin = req.body;
-  console.log(coin);
-  await Stock.create(coin);
-  res.json({ data: "Coin added", error: null });
+  
+  const checkCoin = await Stock.findOne({ where: { name: coin.name}, paranoid: false});
+
+  if(checkCoin && checkCoin.destroyTime == null) {
+    res.json({ data: null, error: "Coin already exists!" });
+  } else if (checkCoin.destroyTime) {
+    await Stock.restore({where: {'stock_id': checkCoin.stock_id}});
+    res.json({ data: "Coin restored!", error: null });
+  } else {
+     await Stock.create(coin);
+  res.json({ data: "Coin added!", error: null });
+  }
 });
 
 router.get('/coin/:coinId', async (req, res) => {
@@ -25,7 +34,7 @@ router.get('/coin/:coinId', async (req, res) => {
 
 router.delete('/coin/:coinId', async (req, res) => {
   const coinId = req.params.coinId;
-  await Stock.destroy({ where: { stock_id: coinId } });
+  await Stock.destroy({ where: { stock_id: coinId }});
   res.json({ data: "Coin soft deleted!", error: null });
 });
 
