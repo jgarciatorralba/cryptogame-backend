@@ -17,7 +17,7 @@ router.use(authMiddleware);
 router.get('/', async (req, res) => {
   const userId = req.user.id;
   const user = await User.findOne({ where: { user_id: userId }, attributes: ['user_id', 'email', 'name', 'avatar', 'role', 'balance', 'estimated', 'ranking'] });
-  user.avatar = user.avatar ? path.posix.join(config.app.serverDomain, 'avatar', user.avatar) : null;
+  user.avatar = user.avatar ? 'http://' + path.posix.join(config.app.serverDomain, 'avatar', user.avatar) : null;
   res.json({ data: user, error: null });
 });
 
