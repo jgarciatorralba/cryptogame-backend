@@ -4,9 +4,9 @@ import Stock from '../models/stock.js';
 const router = express.Router();
 
 router.get('/coins', async (req, res) => {
-  const response = [];
+  const coins = [];
   for (const coin of await Stock.findAll()) {
-    response.push({
+    coins.push({
       symbol: coin.symbol,
       pair: coin.pair,
       name: coin.name,
@@ -19,7 +19,7 @@ router.get('/coins', async (req, res) => {
       image: `https://static.coincap.io/assets/icons/${coin.symbol.toLowerCase()}@2x.png`
     });
   }
-  res.json(response);
+  res.json({ data: coins, error: null });
 });
 
 router.get('/coin/:coin', async (req, res) => {
