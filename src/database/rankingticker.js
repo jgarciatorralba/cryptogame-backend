@@ -21,7 +21,7 @@ export default {
       user.estimated = wallets.reduce((total, element) => total + element.value, 0);
     };
 
-    users.sort((a, b) => b.estimated - a.estimated);
+    users.sort((a, b) => (b.balance + b.estimated) - (a.balance + a.estimated));
     users.forEach((user, index) => { user.ranking = (index + 1); user.save(); });
   }
 };

@@ -7,6 +7,7 @@ import Stock from '../models/stock.js';
 import Wallet from '../models/wallet.js';
 import Trade from '../models/trade.js';
 import config from '../config/app-config.js';
+import path from 'path';
 
 const router = express.Router();
 
@@ -16,6 +17,7 @@ router.use(authMiddleware);
 router.get('/', async (req, res) => {
   const userId = req.user.id;
   const user = await User.findOne({ where: { user_id: userId }, attributes: ['user_id', 'email', 'name', 'avatar', 'role', 'balance', 'estimated', 'ranking'] });
+  user.avatar = user.avatar ? path.posix.join(config.app.serverDomain, 'avatar', user.avatar) : null;
   res.json({ data: user, error: null });
 });
 
