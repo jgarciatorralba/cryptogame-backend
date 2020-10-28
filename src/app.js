@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import path from 'path';
 import config from './config/app-config.js';
 import authRouter from './routers/auth.js';
 import apiPublicRouter from './routers/apiPublic.js';
@@ -19,6 +20,8 @@ app.use('/api', apiPublicRouter);
 app.use('/api', apiPrivateRouter);
 app.use('/user', userRouter);
 app.use('/admin', adminRouter);
+
+app.use('/avatar', express.static(path.join(process.cwd(), 'uploads/avatar')));
 
 app.listen(config.app.port);
 

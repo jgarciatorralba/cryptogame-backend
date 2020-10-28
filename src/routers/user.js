@@ -1,8 +1,7 @@
 import express from 'express';
 import bcrypt from 'bcrypt';
-import multer from 'multer';
-import path from 'path';
 import authMiddleware from '../middlewares/auth.js';
+import avatarMiddleware from '../middlewares/avatar.js';
 import User from '../models/user.js';
 import Stock from '../models/stock.js';
 import Wallet from '../models/wallet.js';
@@ -13,15 +12,6 @@ const router = express.Router();
 
 router.use(authMiddleware);
 
-const storage = multer.diskStorage({
-  destination: './uploads/',
-  filename: function (req, file, cb) {
-    cb(null, req.user.id + path.extname(file.originalname));
-  }
-});
-
-const upload = multer({ storage: storage }).single('avatar');
-
 // Personal user cRUD
 router.get('/', async (req, res) => {
   const userId = req.user.id;
@@ -29,11 +19,14 @@ router.get('/', async (req, res) => {
   res.json({ data: user, error: null });
 });
 
-router.patch('/', upload, async (req, res) => {
-  const userId = req.user.id;
-  const userUpdate = { email: req.body.email, password: await bcrypt.hash(req.body.password, config.app.saltRounds), name: req.body.name };
-  await User.update(userUpdate, { where: { user_id: userId } });
-  res.json({ data: "User updated!", error: null });
+router.patch('/', avatarMiddleware.single('avatar'), async (req, res) => {
+  const userUpdate = {};
+  if (req.body.email) userUpdate.email = req.body.email;
+  if (req.body.password) userUpdate.password = await bcrypt.hash(req.body.password, config.app.saltRounds);
+  if (req.body.name) userUpdate.name = req.body.name;
+  if (req.file) userUpdate.avatar = req.file.filename;
+  await User.update(userUpdate, { where: { user_id: req.user.id } });
+  res.json({ data: 'User updated!', error: null });
 });
 
 router.delete('/', async (req, res) => {
@@ -42,7 +35,7 @@ router.delete('/', async (req, res) => {
   res.json({ data: "User deleted!", error: null });
 });
 
-// Personal user wallet information
+// Personal user wallet informat
 router.get('/wallet', async (req, res) => {
   const user_id = req.user.id;
   const coins = [];

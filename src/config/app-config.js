@@ -15,6 +15,7 @@ export default {
     saltRounds: parseInt(process.env.SALT_ROUNDS),
     accessTokenSecret: process.env.ACCESS_TOKEN_SECRET,
     refreshTokenSecret: process.env.REFRESH_TOKEN_SECRET,
+    serverDomain: process.env.SERVER_DOMAIN,
     clientDomain: process.env.CLIENT_DOMAIN,
     initialBalance: parseInt(process.env.INITIAL_BALANCE)
   },
