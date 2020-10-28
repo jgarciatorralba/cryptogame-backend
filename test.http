@@ -12,7 +12,7 @@ POST http://localhost:3000/login
 Content-Type: application/json
 
 {
-  "email" : "marta@assembler.com",
+  "email" : "admin@admin.com",
   "password" : "123456"
 }
 
@@ -63,7 +63,7 @@ GET http://localhost:3000/admin/coin/1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6MSwiaWF0IjoxNjAzNzExOTc5fQ.h-VUPcMOgWjGft0_4n6vIyWBsyzsyzUZPH_vX60a5i4
 
 ###
-DELETE http://localhost:3000/admin/coin/12
+DELETE http://localhost:3000/admin/coin/10
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6MSwiaWF0IjoxNjAzNzE3Mzk4fQ.4kl5UmIaEwUpq5F87BNF90iduwPdInDSw_6OxvzkKiI
 
 ###
@@ -77,9 +77,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6M
 Content-Type: application/json
 
 { 
-  "symbol": "DCR", 
-  "pair": "DCRUSDT", 
-  "name": "Decred" 
+  "symbol": "XMR", 
+  "pair": "XMRUSDT", 
+  "name": "Monero" 
 }
 
 ###

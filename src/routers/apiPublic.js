@@ -7,6 +7,7 @@ router.get('/coins', async (req, res) => {
   const coins = [];
   for (const coin of await Stock.findAll()) {
     coins.push({
+      id: coin.stock_id,
       symbol: coin.symbol,
       pair: coin.pair,
       name: coin.name,

@@ -12,10 +12,10 @@ const router = express.Router();
 
 router.use(authMiddleware);
 
-// Personal user cRUD
+// Personal user cRUD 
 router.get('/', async (req, res) => {
   const userId = req.user.id;
-  const user = await User.findOne({ where: { user_id: userId }, attributes: ['user_id', 'email', 'name', 'avatar', 'role', 'balance'] });
+  const user = await User.findOne({ where: { user_id: userId }, attributes: ['user_id', 'email', 'name', 'avatar', 'role', 'balance', 'estimated', 'ranking'] });
   res.json({ data: user, error: null });
 });
 
