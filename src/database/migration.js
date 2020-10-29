@@ -4,6 +4,7 @@ import User from '../models/user.js';
 import Stock from '../models/stock.js';
 import Trade from '../models/trade.js';
 import Wallet from '../models/wallet.js';
+import Ticker from '../models/ticker.js';
 import config from '../config/app-config.js';
 
 await connection.drop();
