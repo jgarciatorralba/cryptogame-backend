@@ -4,6 +4,8 @@ import path from 'path';
 import jwt from 'jsonwebtoken';
 import User from '../models/user.js';
 import config from '../config/app-config.js';
+import nodemailer from 'nodemailer';
+import resetMiddleware from '../middlewares/reset.js';
 
 const router = express.Router();
 
@@ -90,5 +92,52 @@ router.post('/login', async (req, res) => {
 
   res.json({ data: data, error: null });
 });
+
+router.post('/password/forgot', async (req, res) => {
+  const email = req.body.email;
+
+  const user = await User.findOne({ where: { email: email } });
+  if (user == null) return res.status(400).json({ data: null, error: 'Email doesn\'t exists' });
+
+  const resetToken = jwt.sign({ id: user.user_id }, config.app.resetTokenSecret, {expiresIn: '1h'});
+
+  const transporter = nodemailer.createTransport({
+    host: "smtp.mailtrap.io",
+    port: 2525,
+    auth: {
+      user: "47a83c571978c6",
+      pass: "2140eb382e5def"
+    }
+  });
+
+  const emailData = {
+    from: 'noreply@cryptogame.com',
+    to: email,
+    subject: 'Reset password',
+    html: `
+      <h2>Reset your password</h2>
+      <a href='http://${config.app.clientDomain}/newpassword?token=${resetToken}'>Reset password token: ${resetToken}</a>`
+  }
+
+  transporter.sendMail(emailData, (error, info) => {
+    if (error) {
+        return console.log(error);
+    }
+    res.json({msg:'Email has been sent'});
+  });  
+});
+
+router.post('/password/reset', resetMiddleware, async (req, res) => {
+
+  try {
+    await User.update({password: await bcrypt.hash(req.body.password, config.app.saltRounds)}, {where : {user_id: req.user.id}});
+    res.json({data: "Email updated", error: null})
+  } catch(error) {
+    console.log(error)
+  }
+
+});
+
+
 
 export default router;

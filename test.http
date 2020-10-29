@@ -13,7 +13,7 @@ Content-Type: application/json
 
 {
   "email" : "admin@admin.com",
-  "password" : "123456"
+  "password" : "admin11"
 }
 
 ###
@@ -28,7 +28,7 @@ GET http://localhost:3000/api/coin/eth
 
 ###
 GET http://localhost:3000/user/wallet
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjAzNTc2OTQwfQ.A_cAT3rEgcVyuVmrRpXcKqnyLoe02wjj4u8aNUYHU10
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwicm9sZSI6MCwiaWF0IjoxNjAzOTc2MjY3fQ.DNgUOPJP3JvMQdwG5mzY0wAS5aI9Jn0fc1pdK8UCDdQ
 
 ###
 GET http://localhost:3000/user/wallet/eth
@@ -112,3 +112,21 @@ Content-Type: application/json
 GET http://localhost:3000/user
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6MSwiaWF0IjoxNjAzNzE3Mzk4fQ.4kl5UmIaEwUpq5F87BNF90iduwPdInDSw_6OxvzkKiI
 Content-Type: application/json
+
+###
+POST  http://localhost:3000/password/forgot
+Content-Type: application/json
+
+{
+  "email" : "admin@admin.com"
+}
+
+
+###
+POST  http://localhost:3000/password/reset
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjAzOTkyNDQ0LCJleHAiOjE2MDM5OTYwNDR9.RZ1zFe6eUwJEmEKd4U_cW6Iz2gNcA4lx78iKybNy1zw
+Content-Type: application/json
+
+{
+  "password" : "admin11"
+}

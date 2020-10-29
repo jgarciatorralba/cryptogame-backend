@@ -14,6 +14,7 @@ export default {
     port: parseInt(process.env.APP_PORT),
     saltRounds: parseInt(process.env.SALT_ROUNDS),
     accessTokenSecret: process.env.ACCESS_TOKEN_SECRET,
+    resetTokenSecret: process.env.RESET_TOKEN_SECRET,
     refreshTokenSecret: process.env.REFRESH_TOKEN_SECRET,
     serverDomain: process.env.SERVER_DOMAIN,
     clientDomain: process.env.CLIENT_DOMAIN,
