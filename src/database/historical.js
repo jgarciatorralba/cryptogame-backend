@@ -25,7 +25,7 @@ export default {
   update7d: async function () {
     const coins = await Stock.findAll();
     for (const coin of coins) {
-      const apiEndpoint = `https://api.binance.com/api/v3/klines?symbol=${coin.pair}&interval=15m&limit=336`;
+      const apiEndpoint = `https://api.binance.com/api/v3/klines?symbol=${coin.pair}&interval=30m&limit=336`;
       const response = await axios.get(apiEndpoint);
       const data = response.data.map(entry => [entry[0], entry[1]]);
       coin.price7d = data;
