@@ -2,8 +2,8 @@ POST http://localhost:3000/register
 Content-Type: application/json
 
 {
-  "email" : "marta@assembler.com",
-  "name" : "Marta",
+  "email" : "ch.callau@gmail.com",
+  "name" : "Christian",
   "password" : "123456"
 }
 
@@ -12,8 +12,8 @@ POST http://localhost:3000/login
 Content-Type: application/json
 
 {
-  "email" : "admin@admin.com",
-  "password" : "admin11"
+  "email" : "ch.callau@gmail.com",
+  "password" : "123456"
 }
 
 ###
@@ -127,9 +127,8 @@ POST  http://localhost:3000/password/forgot
 Content-Type: application/json
 
 {
-  "email" : "admin@admin.com"
+  "email" : "id.32@gmail.com"
 }
-
 
 ###
 POST  http://localhost:3000/password/reset
