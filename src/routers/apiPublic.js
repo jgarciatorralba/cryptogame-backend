@@ -10,8 +10,8 @@ router.get('/coins/:page&:limit', async (req, res) => {
 
 
   const coins = [];
-  const coinsWithPageCount = await Stock.findAndCountAll({limit: limit, offset: offset})
-  
+  const coinsWithPageCount = await Stock.findAndCountAll({ limit: limit, offset: offset });
+
   for (const coin of coinsWithPageCount.rows) {
     coins.push({
       id: coin.stock_id,
@@ -40,6 +40,42 @@ router.get('/coin/:coin', async (req, res) => {
   }
   const price = stock.price;
   res.json({ data: { symbol, price }, error: null });
+});
+
+router.get('/coin/:coin/8h', async (req, res) => {
+  const symbol = req.params.coin.toUpperCase();
+  const stock = await Stock.findOne({ where: { symbol }, attributes: ['price8h'] });
+  if (stock == null) {
+    return res
+      .status(400)
+      .json({ data: null, error: 'Bad Request: Invalid coin symbol' });
+  }
+  const prices = stock.price8h;
+  res.json({ data: { symbol, prices }, error: null });
+});
+
+router.get('/coin/:coin/24h', async (req, res) => {
+  const symbol = req.params.coin.toUpperCase();
+  const stock = await Stock.findOne({ where: { symbol }, attributes: ['price24h'] });
+  if (stock == null) {
+    return res
+      .status(400)
+      .json({ data: null, error: 'Bad Request: Invalid coin symbol' });
+  }
+  const prices = stock.price24h;
+  res.json({ data: { symbol, prices }, error: null });
+});
+
+router.get('/coin/:coin/7d', async (req, res) => {
+  const symbol = req.params.coin.toUpperCase();
+  const stock = await Stock.findOne({ where: { symbol }, attributes: ['price7d'] });
+  if (stock == null) {
+    return res
+      .status(400)
+      .json({ data: null, error: 'Bad Request: Invalid coin symbol' });
+  }
+  const prices = stock.price7d;
+  res.json({ data: { symbol, prices }, error: null });
 });
 
 export default router;

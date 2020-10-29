@@ -8,7 +8,8 @@ import apiPrivateRouter from './routers/apiPrivate.js';
 import userRouter from './routers/user.js';
 import adminRouter from './routers/admin.js';
 import coinTicker from './database/cointicker.js';
-import rankingTicker from './database/rankingticker.js';
+import ranking from './database/ranking.js';
+import historical from './database/historical.js';
 
 const app = express();
 
@@ -26,4 +27,8 @@ app.use('/avatar', express.static(path.join(process.cwd(), 'uploads/avatar')));
 app.listen(config.app.port);
 
 coinTicker.watch();
-setInterval(rankingTicker.update, 1000);
+setInterval(ranking.update, 1000);
+
+setInterval(historical.update8h, 60 * 1000);
+setInterval(historical.update24h, 3 * 60 * 1000);
+setInterval(historical.update7d, 30 * 60 * 1000);

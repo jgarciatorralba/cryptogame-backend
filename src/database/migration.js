@@ -4,7 +4,6 @@ import User from '../models/user.js';
 import Stock from '../models/stock.js';
 import Trade from '../models/trade.js';
 import Wallet from '../models/wallet.js';
-import Ticker from '../models/ticker.js';
 import config from '../config/app-config.js';
 
 await connection.drop();
@@ -34,7 +33,7 @@ const coins = [
   { symbol: 'NEO', pair: 'NEOUSDT', name: 'Neo' },
   { symbol: 'ATOM', pair: 'ATOMUSDT', name: 'Cosmos' },
   { symbol: 'ALGO', pair: 'ALGOUSDT', name: 'Algorand' },
-  { symbol: 'MIOTA', pair: 'MIOTAUSDT', name: 'IOTA' },
+  { symbol: 'MIOTA', pair: 'IOTAUSDT', name: 'IOTA' },
   { symbol: 'DASH', pair: 'DASHUSDT', name: 'Dash' },
   { symbol: 'VET', pair: 'VETUSDT', name: 'VeChain' },
   { symbol: 'ETC', pair: 'ETCUSDT', name: 'Ethereum Classic' },

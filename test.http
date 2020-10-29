@@ -27,6 +27,15 @@ GET http://localhost:3000/api/coins/2&20
 GET http://localhost:3000/api/coin/eth
 
 ###
+GET http://localhost:3000/api/coin/eth/8h
+
+###
+GET http://localhost:3000/api/coin/eth/24h
+
+###
+GET http://localhost:3000/api/coin/eth/7d
+
+###
 GET http://localhost:3000/user/wallet
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjAzNTc2OTQwfQ.A_cAT3rEgcVyuVmrRpXcKqnyLoe02wjj4u8aNUYHU10
 

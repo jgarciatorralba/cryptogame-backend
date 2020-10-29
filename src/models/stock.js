@@ -54,6 +54,18 @@ Stock.init({
     type: DataTypes.INTEGER,
     allowNull: false,
     defaultValue: 0
+  },
+  price8h: {
+    type: DataTypes.JSON,
+    defaultValue: null
+  },
+  price24h: {
+    type: DataTypes.JSON,
+    defaultValue: null
+  },
+  price7d: {
+    type: DataTypes.JSON,
+    defaultValue: null
   }
 }, {
   sequelize: connection,
