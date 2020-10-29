@@ -1,5 +1,21 @@
 # CryptoGame Backend
 
+## Build Setup
+
+``` bash
+# install dependencies
+npm install
+
+# serve with hot reload
+npm run dev
+
+# serve for production
+npm run start
+
+# migrate the database from 0
+npm run migrate
+```
+
 ## General API Information
 * All endpoints return a JSON object with the following format
 
