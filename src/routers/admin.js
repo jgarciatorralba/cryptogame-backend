@@ -2,6 +2,7 @@ import express from 'express';
 import authMiddleware from '../middlewares/auth.js';
 import adminMiddleware from '../middlewares/admin.js';
 import Stock from '../models/stock.js';
+import Wallet from '../models/wallet.js';
 import User from '../models/user.js';
 
 const router = express.Router();
@@ -17,7 +18,7 @@ router.post('/coin', async (req, res) => {
 
   if(checkCoin && checkCoin.destroyTime == null) {
     res.json({ data: null, error: "Coin already exists!" });
-  } else if (checkCoin.destroyTime) {
+  } else if (checkCoin && checkCoin.destroyTime) {
     await Stock.restore({where: {'stock_id': checkCoin.stock_id}});
     res.json({ data: "Coin restored!", error: null });
   } else {
@@ -34,8 +35,14 @@ router.get('/coin/:coinId', async (req, res) => {
 
 router.delete('/coin/:coinId', async (req, res) => {
   const coinId = req.params.coinId;
-  await Stock.destroy({ where: { stock_id: coinId }});
+  const coinsInWallets = await Wallet.findAll({where: {'stock_id': coinId}});
+
+  if (coinsInWallets.length>0) {
+    res.json({ data: null, error: "Cannot delete coin - some players have it in portfolio" });
+  } else {
+    await Stock.destroy({ where: { stock_id: coinId }});
   res.json({ data: "Coin soft deleted!", error: null });
+  }
 });
 
 // User cRUD
